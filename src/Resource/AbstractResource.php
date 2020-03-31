@@ -10,11 +10,10 @@ use Rmr\Operation\ResourceOperationInterface;
  */
 abstract class AbstractResource
 {
-    public const GET_METHOD = 'GET';
-    public const POST_METHOD = 'POST';
-    public const PUT_METHOD = 'PUT';
-    public const PATCH_METHOD = 'PATCH';
-    public const DELETE_METHOD = 'DELETE';
+    protected const NUMERIC_ID = '(?P<id>[0-9]+)';
+
+    /** @var mixed */
+    protected $id;
 
     /** @var ResourceOperationInterface[] */
     protected $operations = [];
@@ -26,22 +25,26 @@ abstract class AbstractResource
      */
     public function addOperation(ResourceOperationInterface $operation): void
     {
-        $operation->setResource($this);
         $this->operations[] = $operation;
     }
 
     /**
-     * Returns resource operation by given HTTP method and path
+     * Returns resource operation by given HTTP method and URI
      *
      * @param string $method
-     * @param string $path
+     * @param string $uri
      * @return ResourceOperationInterface
      * @throws \InvalidArgumentException if operation does not exist
      */
-    public function getOperation(string $method, string $path): ResourceOperationInterface
+    public function getOperation(string $method, string $uri): ResourceOperationInterface
     {
         foreach ($this->operations as $operation) {
-            if ($method === $operation->getMethod() && $path === $this->getPath() . $operation->getPath()) {
+            $pattern = "#^{$this->getPath()}{$operation->getPath()}$#";
+
+            if ($method === $operation->getMethod() && 1 === preg_match($pattern, $uri, $matches)) {
+                $this->id = $matches['id'] ?? null;
+                $operation->setResource($this);
+
                 return $operation;
             }
         }

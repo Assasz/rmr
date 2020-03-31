@@ -30,7 +30,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
      */
     public function getPath(): string
     {
-        return '/clients/%d';
+         return '/clients/' . self::NUMERIC_ID;
     }
 
     /**
@@ -46,7 +46,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
      */
     public function retrieve()
     {
-        // TODO: Implement retrieve() method.
+        return $this->clientRepository->find($this->id);
     }
 
     /**

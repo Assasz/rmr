@@ -5,7 +5,6 @@ namespace Rmr\Operation\Client;
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Operation\ResourceOperationInterface;
-use Rmr\Resource\AbstractResource;
 use Rmr\Resource\Client\ClientCollectionResource;
 
 /**
@@ -22,7 +21,7 @@ class CreateClientOperation extends AbstractOperation implements ResourceOperati
      */
     public function getMethod(): string
     {
-        return AbstractResource::POST_METHOD;
+        return AbstractOperation::POST_METHOD;
     }
 
     /**
@@ -33,15 +32,14 @@ class CreateClientOperation extends AbstractOperation implements ResourceOperati
         return '/';
     }
 
-    /**
-     * @return Client
-     */
-    public function __invoke(): Client
-    {
-        $client = new Client();
-        $client->firstname = $this->request['firstname'];
-        $client->lastname = $this->request['lastname'];
+    // operation __invoke method should always return void
 
-        return $client;
+    public function __invoke(): void
+    {
+        $client = (new Client())
+            ->setFirstname($this->request['firstname'])
+            ->setLastname($this->request['lastname']);
+
+        $this->resource->insert($client);
     }
 }

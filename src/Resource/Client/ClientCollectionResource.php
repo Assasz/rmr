@@ -2,6 +2,8 @@
 
 namespace Rmr\Resource\Client;
 
+use Cake\Collection\Collection;
+use Rmr\Contract\Adapter\EntityManagerAwareTrait;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
 use Rmr\Resource\AbstractResource;
@@ -13,10 +15,12 @@ use Rmr\Resource\CollectionResourceInterface;
  */
 class ClientCollectionResource extends AbstractResource implements CollectionResourceInterface
 {
+    use EntityManagerAwareTrait;
+
     /** @var ClientRepositoryInterface */
     private $clientRepository;
 
-    // TODO: we can inject another dependencies (as contracts!) via setters - traits are welcome
+    // we can inject another dependencies (as contracts!) via setters - traits are welcome
 
     /**
      * ClientCollectionResource constructor.
@@ -48,15 +52,17 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
      */
     public function retrieve()
     {
-        // TODO: Implement retrieve() method.
+        return new Collection($this->clientRepository->findAll());
     }
+
+    // we don't want to remove or replace whole collection at once, usually
 
     /**
      * {@inheritdoc}
      */
     public function remove(): void
     {
-        // TODO: Implement remove() method.
+        throw new \LogicException('Not implemented.');
     }
 
     /**
@@ -64,7 +70,7 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
      */
     public function replace($item): void
     {
-        // TODO: Implement replace() method.
+        throw new \LogicException('Not implemented.');
     }
 
     /**
@@ -72,6 +78,10 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
      */
     public function insert($item): void
     {
-        // TODO: Implement insert() method.
+        if (false === $this->supports($item)) {
+            throw new \InvalidArgumentException('Unable to insert new client to the collection - invalid input provided.');
+        }
+
+        $this->entityManager->persist($item);
     }
 }
