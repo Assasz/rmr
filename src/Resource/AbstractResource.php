@@ -2,6 +2,7 @@
 
 namespace Rmr\Resource;
 
+use Rmr\Http\Exception\NotFoundHttpException;
 use Rmr\Operation\ResourceOperationInterface;
 
 /**
@@ -34,14 +35,14 @@ abstract class AbstractResource
      * @param string $method
      * @param string $uri
      * @return ResourceOperationInterface
-     * @throws \InvalidArgumentException if operation does not exist
+     * @throws NotFoundHttpException if operation does not exist
      */
     public function getOperation(string $method, string $uri): ResourceOperationInterface
     {
         foreach ($this->operations as $operation) {
-            $pattern = "#^{$this->getPath()}{$operation->getPath()}$#";
+            $uriPattern = "#^{$this->getPath()}{$operation->getPath()}$#";
 
-            if ($method === $operation->getMethod() && 1 === preg_match($pattern, $uri, $matches)) {
+            if ($method === $operation->getMethod() && 1 === preg_match($uriPattern, $uri, $matches)) {
                 $this->id = $matches['id'] ?? null;
                 $operation->setResource($this);
 
@@ -49,7 +50,7 @@ abstract class AbstractResource
             }
         }
 
-        throw new \InvalidArgumentException('Not found.');
+        throw new NotFoundHttpException();
     }
 
     /**

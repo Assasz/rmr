@@ -3,6 +3,8 @@
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\HttpFoundation\Request;
+use Rmr\Http\Kernel;
 
 if (false === class_exists(Dotenv::class)) {
     throw new RuntimeException('Please run "composer require symfony/dotenv" to load the ".env" files configuring the application.');
@@ -19,15 +21,4 @@ $dotenv->loadEnv(dirname(__DIR__) . '/.env');
 
 $_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) ?: 'dev';
 
-//$resource = new \Rmr\Resource\Client\ClientCollectionResource();
-//$resource->addOperation(new \Rmr\Operation\Client\CreateClientOperation());
-//
-//foreach ($router->getResources() as $resource) {
-//    try {
-//        $operation = $resource->getOperation($httpMethod, $uri);
-//    } catch (\InvalidArgumentException $e) {
-//        continue;
-//    }
-//}
-//
-//$operation();
+(new Kernel())->boot()->handleRequest(Request::createFromGlobals())->send();

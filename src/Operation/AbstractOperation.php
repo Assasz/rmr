@@ -14,20 +14,8 @@ abstract class AbstractOperation
     public const PATCH_METHOD = 'PATCH';
     public const DELETE_METHOD = 'DELETE';
 
-    /** @var array */
-    protected $request;
-
     /** @var mixed */
     protected $resource;
-
-    /**
-     * AbstractOperation constructor.
-     * @param array $request
-     */
-    public function __construct(array $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * @param mixed $resource

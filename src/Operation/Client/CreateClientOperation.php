@@ -5,7 +5,9 @@ namespace Rmr\Operation\Client;
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Operation\ResourceOperationInterface;
+use Rmr\Representation\ClientRepresentation;
 use Rmr\Resource\Client\ClientCollectionResource;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CreateClientOperation
@@ -32,14 +34,18 @@ class CreateClientOperation extends AbstractOperation implements ResourceOperati
         return '/';
     }
 
-    // operation __invoke method should always return void
-
-    public function __invoke(): void
+    /**
+     * @param Request $request
+     * @return ClientRepresentation
+     */
+    public function __invoke(Request $request): ClientRepresentation
     {
         $client = (new Client())
-            ->setFirstname($this->request['firstname'])
-            ->setLastname($this->request['lastname']);
+            ->setFirstname($request->request->get('firstname'))
+            ->setLastname($request->request->get('lastname'));
 
         $this->resource->insert($client);
+
+        return new ClientRepresentation($client);
     }
 }
