@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GetAllOperation extends AbstractOperation
 {
     /** @var ClientCollectionResource */
-    private $resource;
+    protected $resource;
 
     /**
      * {@inheritdoc}

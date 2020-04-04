@@ -5,6 +5,7 @@ namespace Rmr\Adapter;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use Rmr\Contract\Adapter\EntityManagerAdapterInterface;
@@ -18,7 +19,7 @@ use Rmr\Contract\Adapter\EntityManagerAdapterInterface;
  */
 class EntityManagerAdapter implements EntityManagerAdapterInterface
 {
-    /** @var EntityManagerInterface */
+    /** @var EntityManager */
     private $entityManager;
 
     /**
@@ -33,11 +34,21 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
 
     /**
      * @param object $entity
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persist(object $entity): void
     {
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
     }
 
     /**

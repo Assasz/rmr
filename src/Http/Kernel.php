@@ -50,6 +50,17 @@ final class Kernel
     }
 
     /**
+     * @return Kernel
+     */
+    public function shutdown(): self
+    {
+        $this->container = $this->router = null;
+        $this->booted = false;
+
+        return $this;
+    }
+
+    /**
      * @return ContainerInterface
      * @throws \RuntimeException if kernel is not booted
      */

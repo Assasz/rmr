@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateOperation extends AbstractOperation
 {
     /** @var ClientCollectionResource */
-    private $resource;
+    protected $resource;
 
     /**
      * {@inheritdoc}

@@ -20,3 +20,11 @@ services:
   Rmr\Operation\:
     resource: '../src/Operation'
     public: true
+
+  entity_manager.adapter:
+    class: Rmr\Adapter\EntityManagerAdapter
+    public: true
+
+  Doctrine\ORM\:
+    resource: '../vendor/doctrine/orm/lib/Doctrine/ORM'
+    exclude: '../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver'
