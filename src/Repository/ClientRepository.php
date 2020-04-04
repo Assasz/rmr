@@ -35,19 +35,4 @@ class ClientRepository extends AbstractEntityRepository implements ClientReposit
 
         return $client;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findByName(string $name): Client
-    {
-        $fullname = explode(' ', $name);
-        $client = $this->findOneBy(['firstname' => $fullname[0], 'lastname' => $fullname[1]]);
-
-        if (!$client instanceof Client) {
-            throw new NotFoundHttpException();
-        }
-
-        return $client;
-    }
 }

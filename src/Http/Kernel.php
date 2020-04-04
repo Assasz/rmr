@@ -3,7 +3,6 @@
 namespace Rmr\Http;
 
 use Rmr\Http\Exception\HttpException;
-use Rmr\Representation\JsonRepresentationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -63,11 +62,7 @@ final class Kernel
             return new JsonResponse(['error' => $e->getMessage()], $e->getStatusCode());
         }
 
-        if (!$output instanceof JsonRepresentationInterface) {
-            throw new \RuntimeException('Other formats are not supported at this moment!');
-        }
-
         // TODO: add support for other formats!
-        return (new JsonResponse())->setJson($output->toJson());
+        return new JsonResponse($output);
     }
 }

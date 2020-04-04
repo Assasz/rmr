@@ -1,0 +1,8 @@
+Rmr\Entity\Client:
+  attributes:
+    firstname:
+      groups: ['read']
+    lastname:
+      groups: ['read']
+    email:
+      groups: ['read']

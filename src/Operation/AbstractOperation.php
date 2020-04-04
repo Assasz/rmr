@@ -2,11 +2,14 @@
 
 namespace Rmr\Operation;
 
+use Rmr\Adapter\SerializerAdapter;
+use Rmr\Resource\AbstractResource;
+
 /**
  * Class AbstractOperation
  * @package Rmr\Operation
  */
-abstract class AbstractOperation
+abstract class AbstractOperation implements ResourceOperationInterface
 {
     public const GET_METHOD = 'GET';
     public const POST_METHOD = 'POST';
@@ -14,14 +17,49 @@ abstract class AbstractOperation
     public const PATCH_METHOD = 'PATCH';
     public const DELETE_METHOD = 'DELETE';
 
-    /** @var mixed */
+    /** @var AbstractResource */
     protected $resource;
 
+    /** @var SerializerAdapter */
+    protected $serializer;
+
     /**
-     * @param mixed $resource
+     * @param AbstractResource $resource
      */
     public function setResource($resource): void
     {
         $this->resource = $resource;
+    }
+
+    /**
+     * @required
+     * @param SerializerAdapter $serializer
+     */
+    public function setSerializer(SerializerAdapter $serializer): void
+    {
+        $this->serializer = $serializer;
+    }
+
+    /**
+     * Returns array representation of the resource
+     *
+     * @param object|array $resource
+     * @param string|null $definition
+     * @param array $context
+     * @return array
+     */
+    public function arrayRepresentation($resource, string $definition = null, array $context = []): array
+    {
+        $this->serializer->setup($definition);
+
+        if (true === is_array($resource)) {
+            foreach ($resource as $resourceItem) {
+                $representation[] = $this->serializer->normalize($resourceItem, $context);
+            }
+
+            return $representation ?? [];
+        }
+
+        return $this->serializer->normalize($resource, $context);
     }
 }

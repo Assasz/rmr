@@ -2,7 +2,9 @@
 
 namespace Rmr\Http;
 
-use Rmr\Operation\Client\CreateClientOperation;
+use Rmr\Operation\Client\CreateOperation;
+use Rmr\Operation\Client\GetAllOperation;
+use Rmr\Operation\Client\GetOperation;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Rmr\Resource\Client\ClientResource;
 
@@ -21,10 +23,11 @@ final class RouteMap
     {
         return [
             ClientResource::class => [
-                // TODO: add some operations
+                GetOperation::class
             ],
             ClientCollectionResource::class => [
-                CreateClientOperation::class
+                GetAllOperation::class,
+                CreateOperation::class
             ]
         ];
     }
