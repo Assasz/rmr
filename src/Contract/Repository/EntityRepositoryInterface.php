@@ -8,7 +8,21 @@ namespace Rmr\Contract\Repository;
  */
 interface EntityRepositoryInterface
 {
-    public function findAll(): array;
+    /**
+     * Returns whole entity collection
+     *
+     * @return array
+     */
+    public function fetchAll(): array;
 
-    public function findBy(array $criteria): array;
+    /**
+     * Returns entity collection matching given criteria
+     *
+     * @param array $criteria
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return array
+     */
+    public function fetchBy(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
 }

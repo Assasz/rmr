@@ -52,7 +52,7 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
      */
     public function retrieve()
     {
-        return new Collection($this->clientRepository->findAll());
+        return new Collection($this->clientRepository->fetchAll());
     }
 
     // we don't want to remove or replace whole collection at once, usually

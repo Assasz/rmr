@@ -2,53 +2,52 @@
 
 namespace Rmr\Repository;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
+use Rmr\Http\Exception\NotFoundHttpException;
 
 /**
  * Class ClientRepository
  * @package Rmr\Repository
  */
-class ClientRepository implements ClientRepositoryInterface
+class ClientRepository extends AbstractEntityRepository implements ClientRepositoryInterface
 {
-    // TODO: Doctrine stuff here - it's infrastructure, above resource layer!
-
     /**
-     * @param int $id
-     * @return Client
+     * ClientRepository constructor.
+     * @param ManagerRegistry $registry
      */
-    public function find($id): Client
+    public function __construct(ManagerRegistry $registry)
     {
-        // TODO: Implement find() method.
-        return new Client();
+        parent::__construct($registry, Client::class);
     }
 
     /**
-     * @param string $name
-     * @return Client
+     * {@inheritdoc}
+     */
+    public function pick($id): Client
+    {
+        $client = $this->find($id);
+
+        if (!$client instanceof Client) {
+            throw new NotFoundHttpException();
+        }
+
+        return $client;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function findByName(string $name): Client
     {
-        // TODO: Implement findByName() method.
-        return new Client();
-    }
+        $fullname = explode(' ', $name);
+        $client = $this->findOneBy(['firstname' => $fullname[0], 'lastname' => $fullname[1]]);
 
-    /**
-     * @return array
-     */
-    public function findAll(): array
-    {
-        // TODO: Implement findAll() method.
-        return [];
-    }
+        if (!$client instanceof Client) {
+            throw new NotFoundHttpException();
+        }
 
-    /**
-     * @param array $criteria
-     * @return array
-     */
-    public function findBy(array $criteria): array
-    {
-        // TODO: Implement findBy() method.
-        return [];
+        return $client;
     }
 }

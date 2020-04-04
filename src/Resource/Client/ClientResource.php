@@ -46,7 +46,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
      */
     public function retrieve()
     {
-        return $this->clientRepository->find($this->id);
+        return $this->clientRepository->pick($this->id);
     }
 
     /**

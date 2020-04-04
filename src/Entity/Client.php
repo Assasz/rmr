@@ -17,6 +17,9 @@ class Client
     /** @var string */
     private $lastname;
 
+    /** @var string */
+    private $email;
+
     /**
      * @return int
      */
@@ -59,6 +62,25 @@ class Client
     public function setLastname(string $lastname): Client
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return Client
+     */
+    public function setEmail(string $email): Client
+    {
+        $this->email = $email;
 
         return $this;
     }

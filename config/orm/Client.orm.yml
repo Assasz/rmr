@@ -1,0 +1,20 @@
+Rmr\Entity\Client:
+  type: entity
+  repositoryClass: Rmr\Repository\ClientRepository
+  table: clients
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    firstname:
+      type: string
+      length: 50
+    lastname:
+      type: string
+      length: 50
+    email:
+      type: string
+      length: 32
+      unique: true

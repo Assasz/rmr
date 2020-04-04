@@ -52,9 +52,11 @@ final class Kernel
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws \RuntimeException
      */
     public function handleRequest(Request $request): JsonResponse
     {
+        // TODO: add Whoops error handler
         try {
             $output = ($this->router->findResourceOperation($request))($request);
         } catch (HttpException $e) {
@@ -62,7 +64,7 @@ final class Kernel
         }
 
         if (!$output instanceof JsonRepresentationInterface) {
-            throw new \LogicException('Other formats are not supported at this moment!');
+            throw new \RuntimeException('Other formats are not supported at this moment!');
         }
 
         // TODO: add support for other formats!
