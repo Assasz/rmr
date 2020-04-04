@@ -19,6 +19,4 @@ if (false === method_exists($dotenv, 'loadEnv')) {
 
 $dotenv->loadEnv(dirname(__DIR__) . '/.env');
 
-$_SERVER['APP_ENV'] = $_ENV['APP_ENV'] = ($_SERVER['APP_ENV'] ?? $_ENV['APP_ENV'] ?? null) ?: 'dev';
-
-(new Kernel())->boot()->handleRequest(Request::createFromGlobals())->send();
+(new Kernel())->boot($_ENV['APP_ENV'] ?? 'dev')->handleRequest(Request::createFromGlobals())->send();

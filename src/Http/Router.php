@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 final class Router
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
     /**
