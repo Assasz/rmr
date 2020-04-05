@@ -7,4 +7,4 @@ Rmr\Entity\Client:
     lastname:
       groups: ['read']
     email:
-      groups: ['read']
+      groups: ['read', 'updateEmail']

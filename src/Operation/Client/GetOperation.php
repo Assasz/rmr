@@ -37,6 +37,6 @@ class GetOperation extends AbstractOperation
      */
     public function __invoke(Request $request): array
     {
-        return $this->arrayRepresentation($this->resource->retrieve(), 'client', ['groups' => 'read']);
+        return $this->arrayRepresentation($this->resource->retrieve(), 'Client', ['groups' => 'read']);
     }
 }

@@ -30,6 +30,17 @@ class SerializerAdapter
     }
 
     /**
+     * @param string $data
+     * @param string $outputClass
+     * @param array $context
+     * @return object
+     */
+    public function deserialize(string $data, string $outputClass, array $context = []): object
+    {
+        return $this->serializer->deserialize($data, $outputClass, 'json', $context);
+    }
+
+    /**
      * @param string|null $definition
      * @return SerializerAdapter
      */

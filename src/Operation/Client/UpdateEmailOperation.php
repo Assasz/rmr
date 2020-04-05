@@ -2,7 +2,7 @@
 
 namespace Rmr\Operation\Client;
 
-use Rmr\Http\Exception\BadRequestHttpException;
+use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,20 +35,17 @@ class UpdateEmailOperation extends AbstractOperation
     /**
      * @param Request $request
      * @return array
-     * @throws BadRequestHttpException
      */
     public function __invoke(Request $request): array
     {
-        // TODO: denormalization
-        $requestBody = json_decode($request->getContent(), true) ?? [];
+        // TODO: validation
 
-        if (false === array_key_exists('email', $requestBody)) {
-            throw new BadRequestHttpException();
-        }
+        /** @var Client $body */
+        $body = $this->deserializeBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
 
         $client = $this->resource->retrieve();
+        $client->setEmail($body->getEmail());
 
-        $client->setEmail($requestBody['email']);
         $this->resource->save();
 
         return ['client' => (string)$client];
