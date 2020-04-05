@@ -1,6 +1,6 @@
 <?php
 
-namespace Rmr\Operation\Client;
+namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Operation\AbstractOperation;
 use Rmr\Resource\Client\ClientCollectionResource;
@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GetAllOperation
- * @package Rmr\Operation\Client
+ * @package Rmr\Operation\ClientCollection
  */
 class GetAllOperation extends AbstractOperation
 {

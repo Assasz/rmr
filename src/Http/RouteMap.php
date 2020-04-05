@@ -2,8 +2,8 @@
 
 namespace Rmr\Http;
 
-use Rmr\Operation\Client\CreateOperation;
-use Rmr\Operation\Client\GetAllOperation;
+use Rmr\Operation\ClientCollection\CreateOperation;
+use Rmr\Operation\ClientCollection\GetAllOperation;
 use Rmr\Operation\Client\GetOperation;
 use Rmr\Operation\Client\RemoveOperation;
 use Rmr\Operation\Client\ReplaceOperation;

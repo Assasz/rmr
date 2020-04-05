@@ -1,6 +1,6 @@
 <?php
 
-namespace Rmr\Operation\Client;
+namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CreateClientOperation
- * @package Rmr
+ * Class CreateOperation
+ * @package Rmr\Operation\Client
  */
 class CreateOperation extends AbstractOperation
 {
