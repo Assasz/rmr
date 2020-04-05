@@ -24,6 +24,3 @@ services:
   entity_manager.adapter:
     class: Rmr\Adapter\EntityManagerAdapter
     public: true
-
-  # map this ManagerRegistry to adapter, so it can be injected
-  Doctrine\Persistence\ManagerRegistry: '@entity_manager.adapter'
