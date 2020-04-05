@@ -1,5 +1,7 @@
 Rmr\Entity\Client:
   attributes:
+    id:
+      groups: ['read']
     firstname:
       groups: ['read']
     lastname:

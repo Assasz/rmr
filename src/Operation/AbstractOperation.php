@@ -4,6 +4,7 @@ namespace Rmr\Operation;
 
 use Rmr\Adapter\SerializerAdapter;
 use Rmr\Resource\AbstractResource;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AbstractOperation
@@ -41,6 +42,14 @@ abstract class AbstractOperation implements ResourceOperationInterface
     public function setSerializer(SerializerAdapter $serializer): void
     {
         $this->serializer = $serializer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getResponseStatus(): int
+    {
+        return Response::HTTP_OK;
     }
 
     /**

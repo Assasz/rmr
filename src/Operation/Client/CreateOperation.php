@@ -7,6 +7,7 @@ use Rmr\Http\Exception\BadRequestHttpException;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CreateClientOperation
@@ -34,12 +35,21 @@ class CreateOperation extends AbstractOperation
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getResponseStatus(): int
+    {
+        return Response::HTTP_CREATED;
+    }
+
+    /**
      * @param Request $request
      * @return array
+     * @throws BadRequestHttpException
      */
     public function __invoke(Request $request): array
     {
-        // TODO: refactor, add validation
+        // TODO: denormalization
         $requestBody = json_decode($request->getContent(), true) ?? [];
 
         if (array_diff_key(array_flip(['firstname', 'lastname', 'email']), $requestBody)) {

@@ -3,7 +3,6 @@
 namespace Rmr\Contract\Repository;
 
 use Rmr\Entity\Client;
-use Rmr\Http\Exception\NotFoundHttpException;
 
 /**
  * Interface ClientRepositoryInterface
@@ -12,11 +11,10 @@ use Rmr\Http\Exception\NotFoundHttpException;
 interface ClientRepositoryInterface extends EntityRepositoryInterface
 {
     /**
-     * Returns Client entity object by given identifier
+     * Returns Client entity object by given identifier or NULL if client does not exist
      *
      * @param int $id
-     * @return Client
-     * @throws NotFoundHttpException
+     * @return Client|null
      */
-    public function pick(int $id): Client;
+    public function pick(int $id): ?Client;
 }

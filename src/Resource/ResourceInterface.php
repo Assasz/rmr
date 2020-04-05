@@ -37,4 +37,9 @@ interface ResourceInterface
      * @param mixed $item
      */
     public function replace($item): void;
+
+    /**
+     * Saves changes made to resource
+     */
+    public function save(): void;
 }

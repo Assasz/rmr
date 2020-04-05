@@ -3,6 +3,7 @@
 namespace Rmr\Http;
 
 use Rmr\Http\Exception\HttpException;
+use Rmr\Operation\ResourceOperationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -86,7 +87,8 @@ final class Kernel
         }
 
         try {
-            $output = ($this->router->findResourceOperation($request))($request);
+            $operation = $this->router->findResourceOperation($request);
+            $output = $operation($request);
         } catch (HttpException $e) {
             return new JsonResponse(['error' => $e->getMessage()], $e->getStatusCode());
         } catch (\Throwable $e) {
@@ -97,7 +99,8 @@ final class Kernel
             throw $e;
         }
 
-        return new JsonResponse($output);
+        /** @var ResourceOperationInterface $operation */
+        return new JsonResponse($output, $operation->getResponseStatus());
     }
 
     /**

@@ -23,6 +23,13 @@ interface ResourceOperationInterface
     public function getPath(): string;
 
     /**
+     * Returns HTTP status code, which is assumed as successful for this particular operation
+     *
+     * @return int
+     */
+    public function getResponseStatus(): int;
+
+    /**
      * @param $resource
      */
     public function setResource($resource);

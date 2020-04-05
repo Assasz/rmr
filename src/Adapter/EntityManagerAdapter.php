@@ -34,11 +34,28 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
     /**
      * {@inheritdoc}
      * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function persist(object $entity): void
     {
         $this->entityManager->persist($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function remove(object $entity): void
+    {
+        $this->entityManager->remove($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function flush(): void
+    {
         $this->entityManager->flush();
     }
 

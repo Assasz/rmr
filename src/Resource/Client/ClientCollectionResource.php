@@ -50,7 +50,7 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
     /**
      * {@inheritdoc}
      */
-    public function retrieve()
+    public function retrieve(): Collection
     {
         return new Collection($this->clientRepository->fetchAll());
     }
@@ -83,5 +83,14 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
         }
 
         $this->entityManager->persist($item);
+        $this->save();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save(): void
+    {
+        $this->entityManager->flush();
     }
 }

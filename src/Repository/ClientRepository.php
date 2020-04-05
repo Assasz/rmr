@@ -5,7 +5,6 @@ namespace Rmr\Repository;
 use Rmr\Adapter\EntityManagerAdapter;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
-use Rmr\Http\Exception\NotFoundHttpException;
 
 /**
  * Class ClientRepository
@@ -25,14 +24,8 @@ class ClientRepository extends AbstractEntityRepository implements ClientReposit
     /**
      * {@inheritdoc}
      */
-    public function pick($id): Client
+    public function pick($id): ?Client
     {
-        $client = $this->find($id);
-
-        if (!$client instanceof Client) {
-            throw new NotFoundHttpException();
-        }
-
-        return $client;
+        return $this->find($id);
     }
 }
