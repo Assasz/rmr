@@ -84,4 +84,15 @@ class ClientResource extends AbstractResource implements ResourceInterface
     {
         $this->entityManager->flush();
     }
+
+    /**
+     * Updates client email
+     *
+     * @param string $email
+     */
+    public function updateEmail(string $email): void
+    {
+        $this->retrieve()->setEmail($email);
+        $this->save();
+    }
 }

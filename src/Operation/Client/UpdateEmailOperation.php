@@ -42,12 +42,8 @@ class UpdateEmailOperation extends AbstractOperation
 
         /** @var Client $body */
         $body = $this->deserializeBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
+        $this->resource->updateEmail($body->getEmail());
 
-        $client = $this->resource->retrieve();
-        $client->setEmail($body->getEmail());
-
-        $this->resource->save();
-
-        return ['client' => (string)$client];
+        return ['client' => (string)$this->resource->retrieve()];
     }
 }
