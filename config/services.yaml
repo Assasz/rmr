@@ -25,6 +25,5 @@ services:
     class: Rmr\Adapter\EntityManagerAdapter
     public: true
 
-  Doctrine\ORM\:
-    resource: '../vendor/doctrine/orm/lib/Doctrine/ORM'
-    exclude: '../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver'
+  # map this ManagerRegistry to adapter, so it can be injected
+  Doctrine\Persistence\ManagerRegistry: '@entity_manager.adapter'

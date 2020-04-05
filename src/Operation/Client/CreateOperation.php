@@ -3,6 +3,7 @@
 namespace Rmr\Operation\Client;
 
 use Rmr\Entity\Client;
+use Rmr\Http\Exception\BadRequestHttpException;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,16 +35,24 @@ class CreateOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return string
+     * @return array
      */
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): array
     {
+        // TODO: refactor, add validation
+        $requestBody = json_decode($request->getContent(), true) ?? [];
+
+        if (array_diff_key(array_flip(['firstname', 'lastname', 'email']), $requestBody)) {
+            throw new BadRequestHttpException();
+        }
+
         $client = (new Client())
-            ->setFirstname($request->request->get('firstname'))
-            ->setLastname($request->request->get('lastname'));
+            ->setFirstname($requestBody['firstname'])
+            ->setLastname($requestBody['lastname'])
+            ->setEmail($requestBody['email']);
 
         $this->resource->insert($client);
 
-        return (string)$client;
+        return ['client' => (string)$client];
     }
 }

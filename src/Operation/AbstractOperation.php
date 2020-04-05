@@ -24,11 +24,14 @@ abstract class AbstractOperation implements ResourceOperationInterface
     protected $serializer;
 
     /**
-     * @param AbstractResource $resource
+     * @param $resource
+     * @return AbstractOperation
      */
-    public function setResource($resource): void
+    public function setResource($resource): self
     {
         $this->resource = $resource;
+
+        return $this;
     }
 
     /**

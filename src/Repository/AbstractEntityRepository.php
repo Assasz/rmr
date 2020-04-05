@@ -2,8 +2,8 @@
 
 namespace Rmr\Repository;
 
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityRepository;
+use Rmr\Adapter\EntityManagerAdapter;
 use Rmr\Contract\Repository\EntityRepositoryInterface;
 
 /**
@@ -17,19 +17,12 @@ abstract class AbstractEntityRepository extends EntityRepository implements Enti
 {
     /**
      * AbstractEntityRepository constructor.
-     * @param ManagerRegistry $registry
-     * @param string $entityClass The class name of the entity this repository manages
+     * @param EntityManagerAdapter $managerAdapter
+     * @param string $entityClass
      */
-    public function __construct(ManagerRegistry $registry, string $entityClass)
+    public function __construct(EntityManagerAdapter $managerAdapter, string $entityClass)
     {
-        $manager = $registry->getManagerForClass($entityClass);
-
-        if ($manager === null) {
-            throw new \LogicException(sprintf(
-                'Could not find the entity manager for class "%s". Check your Doctrine configuration to make sure it is configured to load this entity’s metadata.',
-                $entityClass
-            ));
-        }
+        $manager = $managerAdapter->getManager();
 
         parent::__construct($manager, $manager->getClassMetadata($entityClass));
     }

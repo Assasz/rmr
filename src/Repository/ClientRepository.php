@@ -2,7 +2,7 @@
 
 namespace Rmr\Repository;
 
-use Doctrine\Persistence\ManagerRegistry;
+use Rmr\Adapter\EntityManagerAdapter;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
 use Rmr\Http\Exception\NotFoundHttpException;
@@ -15,11 +15,11 @@ class ClientRepository extends AbstractEntityRepository implements ClientReposit
 {
     /**
      * ClientRepository constructor.
-     * @param ManagerRegistry $registry
+     * @param EntityManagerAdapter $managerAdapter
      */
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(EntityManagerAdapter $managerAdapter)
     {
-        parent::__construct($registry, Client::class);
+        parent::__construct($managerAdapter, Client::class);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Rmr\Resource;
 
+use Rmr\Http\Exception\MethodNotAllowedHttpException;
 use Rmr\Http\Exception\NotFoundHttpException;
 use Rmr\Operation\ResourceOperationInterface;
 
@@ -36,21 +37,47 @@ abstract class AbstractResource
      * @param string $uri
      * @return ResourceOperationInterface
      * @throws NotFoundHttpException if operation does not exist
+     * @throws MethodNotAllowedHttpException if HTTP method does not match any available operation's method
      */
     public function getOperation(string $method, string $uri): ResourceOperationInterface
     {
+        foreach ($this->getOperationsMatchingUri($uri) as $operation) {
+            if ($method !== $operation->getMethod()) {
+                continue;
+            }
+
+            return $operation->setResource($this);
+        }
+
+        throw new MethodNotAllowedHttpException();
+    }
+
+    /**
+     * Return resource operations matching given URI
+     *
+     * @param string $uri
+     * @return ResourceOperationInterface[]
+     * @throws NotFoundHttpException if operation does not exist
+     */
+    private function getOperationsMatchingUri(string $uri): array
+    {
+        $uri = rtrim($uri, '/');
+        $operationsMatchingUri = [];
+
         foreach ($this->operations as $operation) {
-            $uriPattern = "#^{$this->getPath()}{$operation->getPath()}$#";
+            $operationPath = rtrim($operation->getPath(), '/');
 
-            if ($method === $operation->getMethod() && 1 === preg_match($uriPattern, $uri, $matches)) {
+            if (1 === preg_match("#^{$this->getPath()}{$operationPath}$#", $uri, $matches)) {
                 $this->id = $matches['id'] ?? null;
-                $operation->setResource($this);
-
-                return $operation;
+                $operationsMatchingUri[] = $operation;
             }
         }
 
-        throw new NotFoundHttpException();
+        if (true === empty($operationsMatchingUri)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $operationsMatchingUri;
     }
 
     /**

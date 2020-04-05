@@ -25,5 +25,5 @@ interface ResourceOperationInterface
     /**
      * @param $resource
      */
-    public function setResource($resource): void;
+    public function setResource($resource);
 }

@@ -2,10 +2,12 @@
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Rmr\Http\Kernel;
+use Rmr\Adapter\EntityManagerAdapter;
 
 require __DIR__ . '/bootstrap.php';
 
 // replace with mechanism to retrieve EntityManager in your app
-$entityManager = (new Kernel())->boot()->getContainer()->get('entity_manager.adapter')->getManager();
+/** @var EntityManagerAdapter $managerAdapter */
+$managerAdapter = (new Kernel())->boot()->getContainer()->get('entity_manager.adapter');
 
-return ConsoleRunner::createHelperSet($entityManager);
+return ConsoleRunner::createHelperSet($managerAdapter->getManager());

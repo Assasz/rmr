@@ -41,7 +41,7 @@ class SerializerAdapter
 
         if (false === empty($definition)) {
             $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader(
-                dirname(__DIR__, 2) . "/config/serialization/{$definition}.yaml"
+                dirname(__DIR__, 2) . "/config/serializer/{$definition}.yaml"
             ));
         }
 

@@ -27,15 +27,18 @@ final class Router
     }
 
     /**
+     * Finds resource operation able to process given request
+     *
      * @param Request $request
      * @return callable
+     * @throws NotFoundHttpException if there is no proper operation mapped to any resource
      */
     public function findResourceOperation(Request $request): callable
     {
         foreach ((new RouteMap())->get() as $resource => $operations) {
             try {
                 /** @var callable $operation */
-                $operation = $this->initializeResource($resource, $operations)->getOperation($request->getMethod(), $request->getUri());
+                $operation = $this->initializeResource($resource, $operations)->getOperation($request->getMethod(), $request->getPathInfo());
 
                 break;
             } catch (NotFoundHttpException $e) {
