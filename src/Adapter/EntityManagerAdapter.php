@@ -52,6 +52,15 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
     /**
      * {@inheritdoc}
      * @throws \Doctrine\ORM\ORMException
+     */
+    public function replace(object $entity): void
+    {
+        $this->entityManager->merge($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function flush(): void

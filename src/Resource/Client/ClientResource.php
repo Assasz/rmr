@@ -71,10 +71,16 @@ class ClientResource extends AbstractResource implements ResourceInterface
 
     /**
      * {@inheritdoc}
+     * @throws \InvalidArgumentException
      */
     public function replace($item): void
     {
-        throw new \LogicException('Not implemented.');
+        if (false === $this->supports($item)) {
+            throw new \InvalidArgumentException('Unable to replace given client - invalid input provided.');
+        }
+
+        $this->entityManager->replace($item);
+        $this->save();
     }
 
     /**

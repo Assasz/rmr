@@ -29,6 +29,17 @@ class Client
     }
 
     /**
+     * @param int $id
+     * @return Client
+     */
+    public function setId(int $id): Client
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getFirstname(): string

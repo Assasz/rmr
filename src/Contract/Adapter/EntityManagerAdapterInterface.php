@@ -23,6 +23,13 @@ interface EntityManagerAdapterInterface
     public function remove(object $entity): void;
 
     /**
+     * Merges provided entity object into persistence context
+     *
+     * @param object $entity
+     */
+    public function replace(object $entity): void;
+
+    /**
      * Saves changes made to entity objects
      */
     public function flush(): void;
