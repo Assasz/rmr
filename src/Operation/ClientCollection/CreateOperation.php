@@ -4,7 +4,6 @@ namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
-use Rmr\Operation\JsonRepresentableTrait;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CreateOperation extends AbstractOperation
 {
-    use JsonRepresentableTrait;
 
     /** @var ClientCollectionResource */
     protected $resource;

@@ -4,7 +4,6 @@ namespace Rmr\Operation\Client;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
-use Rmr\Operation\JsonRepresentableTrait;
 use Rmr\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReplaceOperation extends AbstractOperation
 {
-    use JsonRepresentableTrait;
-
     /** @var ClientResource */
     protected $resource;
 

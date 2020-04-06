@@ -66,4 +66,17 @@ abstract class AbstractOperation implements ResourceOperationInterface
     {
         return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, $context);
     }
+
+    /**
+     * Returns JSON representation of the resource
+     *
+     * @param object|array $resource
+     * @param string|null $definition
+     * @param array $context
+     * @return string
+     */
+    protected function jsonRepresentation($resource, string $definition = null, array $context = []): string
+    {
+        return $this->serializer->setup($definition)->serialize($resource, $context);
+    }
 }
