@@ -3,6 +3,7 @@
 namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Operation\AbstractOperation;
+use Rmr\Operation\JsonRepresentableTrait;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GetAllOperation extends AbstractOperation
 {
+    use JsonRepresentableTrait;
+
     /** @var ClientCollectionResource */
     protected $resource;
 
@@ -33,10 +36,10 @@ class GetAllOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return array
+     * @return string
      */
-    public function __invoke(Request $request): array
+    public function __invoke(Request $request): string
     {
-        return $this->arrayRepresentation($this->resource->retrieve()->toList(), 'Client', ['groups' => 'read']);
+        return $this->jsonRepresentation($this->resource->retrieve()->toList(), 'Client', ['groups' => 'read']);
     }
 }

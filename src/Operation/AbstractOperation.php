@@ -66,27 +66,4 @@ abstract class AbstractOperation implements ResourceOperationInterface
     {
         return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, $context);
     }
-
-    /**
-     * Returns array representation of the resource
-     *
-     * @param object|array $resource
-     * @param string|null $definition
-     * @param array $context
-     * @return array
-     */
-    protected function arrayRepresentation($resource, string $definition = null, array $context = []): array
-    {
-        $this->serializer->setup($definition);
-
-        if (true === is_array($resource)) {
-            foreach ($resource as $resourceItem) {
-                $representation[] = $this->serializer->normalize($resourceItem, $context);
-            }
-
-            return $representation ?? [];
-        }
-
-        return $this->serializer->normalize($resource, $context);
-    }
 }

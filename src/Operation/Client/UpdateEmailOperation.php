@@ -4,6 +4,7 @@ namespace Rmr\Operation\Client;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
+use Rmr\Operation\JsonRepresentableTrait;
 use Rmr\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateEmailOperation extends AbstractOperation
 {
+    use JsonRepresentableTrait;
+
     /** @var ClientResource */
     protected $resource;
 
@@ -34,9 +37,9 @@ class UpdateEmailOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return array
+     * @return string
      */
-    public function __invoke(Request $request): array
+    public function __invoke(Request $request): string
     {
         // TODO: validation
 
@@ -44,6 +47,6 @@ class UpdateEmailOperation extends AbstractOperation
         $body = $this->deserializeBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
         $this->resource->updateEmail($body->getEmail());
 
-        return ['client' => (string)$this->resource->retrieve()];
+        return $this->jsonRepresentation(['client' => (string)$this->resource->retrieve()]);
     }
 }

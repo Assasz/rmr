@@ -76,11 +76,11 @@ final class Kernel
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      * @throws \RuntimeException if kernel is not booted
      * @throws \Throwable
      */
-    public function handleRequest(Request $request): JsonResponse
+    public function handleRequest(Request $request): Response
     {
         if (false === $this->booted) {
             throw new \RuntimeException('Unable to handle request when kernel is not booted. Please, boot kernel first.');
@@ -90,17 +90,17 @@ final class Kernel
             $operation = $this->router->findResourceOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
-            return new JsonResponse(['error' => $e->getMessage()], $e->getStatusCode());
+            return $this->prepareJsonResponse(['error' => $e->getMessage()], $e->getStatusCode());
         } catch (\Throwable $e) {
             if ('prod' === $this->env) {
-                return new JsonResponse(['error' => 'Internal server error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                return $this->prepareJsonResponse(['error' => 'Internal server error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             throw $e;
         }
 
         /** @var ResourceOperationInterface $operation */
-        return new JsonResponse($output, $operation->getResponseStatus());
+        return $this->prepareJsonResponse($output, $operation->getResponseStatus());
     }
 
     /**
@@ -128,5 +128,22 @@ final class Kernel
         $loader->load('services.yaml');
 
         $this->container->compile();
+    }
+
+    /**
+     * Returns JSON response ready to be sent to the client
+     * For now it's JSON API, but it can be easily switched/extended with other formats
+     *
+     * @param mixed $content
+     * @param int $statusCode
+     * @return JsonResponse
+     */
+    private function prepareJsonResponse($content, int $statusCode): JsonResponse
+    {
+        if (true === is_scalar($content)) {
+            return (new JsonResponse(null, $statusCode))->setJson($content);
+        }
+
+        return new JsonResponse($content, $statusCode);
     }
 }

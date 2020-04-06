@@ -14,19 +14,17 @@ use Symfony\Component\Serializer\Serializer;
  */
 class SerializerAdapter
 {
-    private const ENCODERS = [JsonEncoder::class];
-
     /** @var Serializer */
     private $serializer;
 
     /**
-     * @param object $entity
+     * @param object|array $data
      * @param array $context
-     * @return array
+     * @return string
      */
-    public function normalize(object $entity, array $context = []): array
+    public function serialize($data, array $context = []): string
     {
-        return $this->serializer->normalize($entity, null, $context);
+        return $this->serializer->serialize($data, 'json', $context);
     }
 
     /**
@@ -46,17 +44,13 @@ class SerializerAdapter
      */
     public function setup(string $definition = null): self
     {
-        foreach (self::ENCODERS as $ENCODER) {
-            $encoders[] = new $ENCODER();
-        }
-
         if (false === empty($definition)) {
             $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader(
                 dirname(__DIR__, 2) . "/config/serializer/{$definition}.yaml"
             ));
         }
 
-        $this->serializer = new Serializer([new ObjectNormalizer($classMetadataFactory ?? null)], $encoders ?? []);
+        $this->serializer = new Serializer([new ObjectNormalizer($classMetadataFactory ?? null)], [new JsonEncoder()]);
 
         return $this;
     }

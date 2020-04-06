@@ -42,12 +42,9 @@ class RemoveOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return array
      */
-    public function __invoke(Request $request): array
+    public function __invoke(Request $request)
     {
         $this->resource->remove();
-
-        return [];
     }
 }
