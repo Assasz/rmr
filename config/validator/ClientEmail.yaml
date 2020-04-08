@@ -1,0 +1,5 @@
+Rmr\Entity\Client:
+  properties:
+    email:
+      - NotBlank: ~
+      - Email: ~

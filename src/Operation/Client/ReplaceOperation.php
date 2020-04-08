@@ -38,13 +38,13 @@ class ReplaceOperation extends AbstractOperation
      */
     public function __invoke(Request $request): string
     {
-        // TODO: validation
         $client = $this->resource->retrieve();
 
         /** @var Client $newClient */
         $newClient = $this->deserializeBody($request, Client::class);
         $newClient->setId($client->getId());
 
+        $this->validate($newClient, 'Client');
         $this->resource->replace($newClient);
 
         return $this->jsonRepresentation(['client' => (string)$newClient]);

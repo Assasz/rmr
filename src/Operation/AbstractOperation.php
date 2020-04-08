@@ -2,9 +2,7 @@
 
 namespace Rmr\Operation;
 
-use Rmr\Adapter\SerializerAdapter;
 use Rmr\Resource\AbstractResource;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -13,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class AbstractOperation implements ResourceOperationInterface
 {
+    use ControllerTrait;
+
     public const GET_METHOD = 'GET';
     public const POST_METHOD = 'POST';
     public const PUT_METHOD = 'PUT';
@@ -22,12 +22,8 @@ abstract class AbstractOperation implements ResourceOperationInterface
     /** @var AbstractResource */
     protected $resource;
 
-    /** @var SerializerAdapter */
-    protected $serializer;
-
     /**
-     * @param $resource
-     * @return AbstractOperation
+     * {@inheritdoc}
      */
     public function setResource($resource): self
     {
@@ -37,46 +33,10 @@ abstract class AbstractOperation implements ResourceOperationInterface
     }
 
     /**
-     * @required
-     * @param SerializerAdapter $serializer
-     */
-    public function setSerializer(SerializerAdapter $serializer): void
-    {
-        $this->serializer = $serializer;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getResponseStatus(): int
     {
         return Response::HTTP_OK;
-    }
-
-    /**
-     * Returns deserialized request body in form of given entity
-     *
-     * @param Request $request
-     * @param string $entityClass
-     * @param string|null $definition
-     * @param array $context
-     * @return object
-     */
-    protected function deserializeBody(Request $request, string $entityClass, string $definition = null, array $context = []): object
-    {
-        return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, $context);
-    }
-
-    /**
-     * Returns JSON representation of the resource
-     *
-     * @param object|array $resource
-     * @param string|null $definition
-     * @param array $context
-     * @return string
-     */
-    protected function jsonRepresentation($resource, string $definition = null, array $context = []): string
-    {
-        return $this->serializer->setup($definition)->serialize($resource, $context);
     }
 }
