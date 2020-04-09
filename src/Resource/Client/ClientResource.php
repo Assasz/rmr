@@ -6,6 +6,7 @@ use Rmr\Contract\Adapter\EntityManagerAwareTrait;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
 use Rmr\Http\Exception\NotFoundHttpException;
+use Rmr\Http\Exception\UnprocessableEntityHttpException;
 use Rmr\Resource\AbstractResource;
 use Rmr\Resource\ResourceInterface;
 
@@ -71,12 +72,12 @@ class ClientResource extends AbstractResource implements ResourceInterface
 
     /**
      * {@inheritdoc}
-     * @throws \InvalidArgumentException
+     * @throws UnprocessableEntityHttpException
      */
     public function replace($item): void
     {
         if (false === $this->supports($item)) {
-            throw new \InvalidArgumentException('Unable to replace given client - invalid input provided.');
+            throw new UnprocessableEntityHttpException();
         }
 
         $this->entityManager->replace($item);

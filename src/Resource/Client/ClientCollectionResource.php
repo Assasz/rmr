@@ -6,6 +6,7 @@ use Cake\Collection\Collection;
 use Rmr\Contract\Adapter\EntityManagerAwareTrait;
 use Rmr\Contract\Repository\ClientRepositoryInterface;
 use Rmr\Entity\Client;
+use Rmr\Http\Exception\UnprocessableEntityHttpException;
 use Rmr\Resource\AbstractResource;
 use Rmr\Resource\CollectionResourceInterface;
 
@@ -75,11 +76,12 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
 
     /**
      * {@inheritdoc}
+     * @throws UnprocessableEntityHttpException
      */
     public function insert($item): void
     {
         if (false === $this->supports($item)) {
-            throw new \InvalidArgumentException('Unable to insert new client to the collection - invalid input provided.');
+            throw new UnprocessableEntityHttpException();
         }
 
         $this->entityManager->persist($item);

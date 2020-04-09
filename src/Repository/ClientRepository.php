@@ -24,7 +24,7 @@ class ClientRepository extends AbstractEntityRepository implements ClientReposit
     /**
      * {@inheritdoc}
      */
-    public function pick($id): ?Client
+    public function pick(int $id): ?Client
     {
         return $this->find($id);
     }
