@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020.
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
+ */
 
 namespace Rmr\Http;
 

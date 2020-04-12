@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020.
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
+ */
 
 namespace Rmr\Http;
 
@@ -12,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class Router
  * @package Rmr\Http
  */
-final class Router
+class Router
 {
     /** @var ContainerInterface */
     private $container;

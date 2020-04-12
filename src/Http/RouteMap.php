@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2020.
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
+ */
 
 namespace Rmr\Http;
 
@@ -15,7 +19,7 @@ use Rmr\Resource\Client\ClientResource;
  * Class RouteMap
  * @package Rmr\Http
  */
-final class RouteMap
+class RouteMap
 {
     /**
      * Returns route map, where operations are mapped to resources
