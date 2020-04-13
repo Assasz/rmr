@@ -34,7 +34,7 @@ interface ResourceOperationInterface
     public function getResponseStatus(): int;
 
     /**
-     * @param $resource
+     * @param mixed $resource
      */
     public function setResource($resource);
 }

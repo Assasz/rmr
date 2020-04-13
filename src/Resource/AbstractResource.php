@@ -19,7 +19,7 @@ abstract class AbstractResource
     protected const NUMERIC_ID = '(?P<id>[0-9]+)';
 
     /** @var mixed */
-    protected $id;
+    public $id;
 
     /** @var ResourceOperationInterface[] */
     protected $operations = [];
