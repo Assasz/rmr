@@ -7,16 +7,15 @@
 namespace Rmr\Http;
 
 use Rmr\Http\Exception\HttpException;
+use Rmr\Http\Exception\NotAcceptableHttpException;
+use Rmr\Http\Formatter\FormatterFactory;
 use Rmr\Operation\ResourceOperationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Whoops\Handler\JsonResponseHandler;
-use Whoops\Run;
 
 /**
  * Class Kernel
@@ -45,7 +44,6 @@ final class Kernel
     {
         $this->env = $env;
 
-        $this->initializeErrorHandler();
         $this->initializeContainer();
 
         $this->router = new Router($this->container);
@@ -91,32 +89,26 @@ final class Kernel
         }
 
         try {
+            $formatter = FormatterFactory::create($request->getAcceptableContentTypes());
+        } catch (NotAcceptableHttpException $e) {
+            return new Response($e->getMessage(), $e->getStatusCode());
+        }
+
+        try {
             $operation = $this->router->findResourceOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
-            return $this->prepareJsonResponse(['error' => $e->getMessage()], $e->getStatusCode());
+            return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
         } catch (\Throwable $e) {
             if ('prod' === $this->env) {
-                return $this->prepareJsonResponse(['error' => 'Internal server error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
+                return $formatter->format(['error' => 'Internal server error.'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             throw $e;
         }
 
         /** @var ResourceOperationInterface $operation */
-        return $this->prepareJsonResponse($output, $operation->getResponseStatus());
-    }
-
-    /**
-     * Initializes error handler for non-production environment
-     */
-    private function initializeErrorHandler(): void
-    {
-        if ('prod' === $this->env) {
-            return;
-        }
-
-        (new Run)->pushHandler(new JsonResponseHandler())->register();
+        return $formatter->format($output, $operation->getResponseStatus());
     }
 
     /**
@@ -132,22 +124,5 @@ final class Kernel
         $loader->load('services.yaml');
 
         $this->container->compile();
-    }
-
-    /**
-     * Returns JSON response ready to be sent to the client
-     * For now it's JSON API, but it can be easily switched/extended with other formats
-     *
-     * @param mixed $content
-     * @param int $statusCode
-     * @return JsonResponse
-     */
-    private function prepareJsonResponse($content, int $statusCode): JsonResponse
-    {
-        if (true === is_scalar($content)) {
-            return (new JsonResponse(null, $statusCode))->setJson($content);
-        }
-
-        return new JsonResponse($content, $statusCode);
     }
 }
