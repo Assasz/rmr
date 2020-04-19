@@ -44,7 +44,7 @@ class UpdateEmailOperation extends AbstractOperation
     public function __invoke(Request $request): string
     {
         /** @var Client $body */
-        $body = $this->deserializeBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
+        $body = $this->fromJsonBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
 
         $this->validate($body, 'ClientEmail');
         $this->resource->updateEmail($body->getEmail());

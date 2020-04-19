@@ -90,13 +90,10 @@ final class Kernel
 
         try {
             $formatter = FormatterFactory::create($request->getAcceptableContentTypes());
-        } catch (NotAcceptableHttpException $e) {
-            return new Response($e->getMessage(), $e->getStatusCode());
-        }
-
-        try {
             $operation = $this->router->findResourceOperation($request);
             $output = $operation($request);
+        } catch (NotAcceptableHttpException $e) {
+            return new Response($e->getMessage(), $e->getStatusCode());
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
         } catch (\Throwable $e) {

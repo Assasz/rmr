@@ -55,7 +55,11 @@ class Router
             }
         }
 
-        return $operation ?? static function () { throw new NotFoundHttpException(); };
+        if (false === is_callable($operation ?? null)) {
+            throw new NotFoundHttpException();
+        }
+
+        return $operation;
     }
 
     /**

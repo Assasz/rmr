@@ -17,7 +17,7 @@ use Whoops\Run;
 class Debug
 {
     /**
-     * Enables debug mode for web environment
+     * Enables debug mode for web environment (only for non-production)
      */
     public static function web(): void
     {
@@ -33,10 +33,6 @@ class Debug
      */
     public static function cli(): void
     {
-        if ('prod' === ($_ENV['APP_ENV'] ?? 'dev')) {
-            return;
-        }
-
         (new Run())->pushHandler(new PlainTextHandler())->register();
     }
 }

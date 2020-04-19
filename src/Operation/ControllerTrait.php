@@ -43,7 +43,7 @@ trait ControllerTrait
     }
 
     /**
-     * Returns deserialized request body in form of given entity
+     * Returns JSON deserialized request body in form of entity object
      *
      * @param Request $request
      * @param string $entityClass
@@ -51,9 +51,22 @@ trait ControllerTrait
      * @param array $context
      * @return object
      */
-    protected function deserializeBody(Request $request, string $entityClass, string $definition = null, array $context = []): object
+    protected function fromJsonBody(Request $request, string $entityClass, string $definition = null, array $context = []): object
     {
-        return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, $context);
+        return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, 'json', $context);
+    }
+
+    /**
+     * Returns JSON representation of the resource
+     *
+     * @param object|array $resource
+     * @param string|null $definition
+     * @param array $context
+     * @return string
+     */
+    protected function jsonRepresentation($resource, string $definition = null, array $context = []): string
+    {
+        return $this->serializer->setup($definition)->serialize($resource, 'json', $context);
     }
 
     /**
@@ -70,18 +83,5 @@ trait ControllerTrait
         } catch (InvalidEntityException $e) {
             throw new BadRequestHttpException($e->getErrors());
         }
-    }
-
-    /**
-     * Returns JSON representation of the resource
-     *
-     * @param object|array $resource
-     * @param string|null $definition
-     * @param array $context
-     * @return string
-     */
-    protected function jsonRepresentation($resource, string $definition = null, array $context = []): string
-    {
-        return $this->serializer->setup($definition)->serialize($resource, $context);
     }
 }

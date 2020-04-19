@@ -6,6 +6,7 @@
 
 namespace Rmr\Adapter;
 
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
@@ -23,23 +24,25 @@ class SerializerAdapter
 
     /**
      * @param object|array $data
+     * @param string $format
      * @param array $context
      * @return string
      */
-    public function serialize($data, array $context = []): string
+    public function serialize($data, string $format, array $context = []): string
     {
-        return $this->serializer->serialize($data, 'json', $context);
+        return $this->serializer->serialize($data, $format, $context);
     }
 
     /**
      * @param string $data
      * @param string $outputClass
+     * @param string $format
      * @param array $context
      * @return object
      */
-    public function deserialize(string $data, string $outputClass, array $context = []): object
+    public function deserialize(string $data, string $outputClass, string $format, array $context = []): object
     {
-        return $this->serializer->deserialize($data, $outputClass, 'json', $context);
+        return $this->serializer->deserialize($data, $outputClass, $format, $context);
     }
 
     /**
@@ -54,8 +57,16 @@ class SerializerAdapter
             ));
         }
 
-        $this->serializer = new Serializer([new ObjectNormalizer($classMetadataFactory ?? null)], [new JsonEncoder()]);
+        $this->serializer = new Serializer([new ObjectNormalizer($classMetadataFactory ?? null)], $this->getEncoders());
 
         return $this;
+    }
+
+    /**
+     * @return EncoderInterface[]
+     */
+    private function getEncoders(): array
+    {
+        return [new JsonEncoder()];
     }
 }

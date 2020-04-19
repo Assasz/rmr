@@ -52,7 +52,7 @@ class CreateOperation extends AbstractOperation
      */
     public function __invoke(Request $request): string
     {
-        $client = $this->deserializeBody($request, Client::class);
+        $client = $this->fromJsonBody($request, Client::class);
 
         $this->validate($client, 'Client');
         $this->resource->insert($client);

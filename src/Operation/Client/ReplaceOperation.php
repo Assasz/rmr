@@ -45,7 +45,7 @@ class ReplaceOperation extends AbstractOperation
         $client = $this->resource->retrieve();
 
         /** @var Client $newClient */
-        $newClient = $this->deserializeBody($request, Client::class);
+        $newClient = $this->fromJsonBody($request, Client::class);
         $newClient->setId($client->getId());
 
         $this->validate($newClient, 'Client');
