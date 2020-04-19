@@ -6,6 +6,7 @@
 
 namespace Rmr\Resource;
 
+use Cake\Collection\Collection;
 use Rmr\Http\Exception\MethodNotAllowedHttpException;
 use Rmr\Http\Exception\NotFoundHttpException;
 use Rmr\Operation\ResourceOperationInterface;
@@ -45,43 +46,48 @@ abstract class AbstractResource
      */
     public function getOperation(string $method, string $uri): ResourceOperationInterface
     {
-        foreach ($this->getOperationsMatchingUri($uri) as $operation) {
-            if ($method !== $operation->getMethod()) {
-                continue;
+        $operations = $this->getOperationsMatchingUri($uri)->filter(
+            static function (ResourceOperationInterface $operation) use ($method) {
+                return $method === $operation->getMethod();
             }
+        );
 
-            return $operation->setResource($this);
+        if (true === $operations->isEmpty()) {
+            throw new MethodNotAllowedHttpException();
         }
 
-        throw new MethodNotAllowedHttpException();
+        return $operations->first()->setResource($this);
     }
 
     /**
      * Return resource operations matching given URI
      *
      * @param string $uri
-     * @return ResourceOperationInterface[]
+     * @return Collection
      * @throws NotFoundHttpException if operation does not exist
      */
-    private function getOperationsMatchingUri(string $uri): array
+    private function getOperationsMatchingUri(string $uri): Collection
     {
-        $uri = rtrim($uri, '/');
-        $operationsMatchingUri = [];
+        $self = $this;
 
-        foreach ($this->operations as $operation) {
-            $operationPath = rtrim($operation->getPath(), '/');
+        $operations = (new Collection($this->operations))->filter(
+            static function (ResourceOperationInterface $operation) use ($uri, $self) {
+                $operationPath = rtrim($operation->getPath(), '/');
+                $uri = rtrim($uri, '/');
 
-            if (1 === preg_match("#^{$this->getPath()}{$operationPath}$#", $uri, $matches)) {
-                $this->id = $matches['id'] ?? null;
-                $operationsMatchingUri[] = $operation;
+                if (true === $isMatch = (bool)preg_match("#^{$self->getPath()}{$operationPath}$#", $uri, $matches)) {
+                    $self->id = $matches['id'] ?? null;
+                }
+
+                return $isMatch;
             }
-        }
+        );
 
-        if (true === empty($operationsMatchingUri)) {
+        if (true === $operations->isEmpty()) {
             throw new NotFoundHttpException();
         }
 
-        return $operationsMatchingUri;
+        return $operations;
     }
 
     /**
