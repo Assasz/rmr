@@ -6,6 +6,8 @@
 
 namespace Rmr\Operation;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Interface ResourceOperationInterface
  * @package Rmr
@@ -37,4 +39,10 @@ interface ResourceOperationInterface
      * @param mixed $resource
      */
     public function setResource($resource);
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function __invoke(Request $request);
 }

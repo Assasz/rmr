@@ -32,21 +32,22 @@ class Router
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->resourceMap = Yaml::parseFile(dirname(__DIR__, 2) . '/config/resources.yaml')['resources'];
+        $this->resourceMap = $this->parseResourceMap();
     }
 
     /**
      * Finds resource operation able to process given request
      *
      * @param Request $request
-     * @return callable
+     * @return ResourceOperationInterface
      * @throws NotFoundHttpException if there is no proper operation mapped to any resource
      */
-    public function findResourceOperation(Request $request): callable
+    public function findResourceOperation(Request $request): ResourceOperationInterface
     {
+        $operation = null;
+
         foreach ($this->resourceMap as $resource => $operations) {
             try {
-                /** @var callable $operation */
                 $operation = $this->initializeResource($resource, $operations)->getOperation($request->getMethod(), $request->getPathInfo());
 
                 break;
@@ -55,7 +56,7 @@ class Router
             }
         }
 
-        if (false === is_callable($operation ?? null)) {
+        if (!$operation instanceof ResourceOperationInterface) {
             throw new NotFoundHttpException();
         }
 
@@ -79,5 +80,13 @@ class Router
         }
 
         return $resource;
+    }
+
+    /**
+     * @return array
+     */
+    private function parseResourceMap(): array
+    {
+        return Yaml::parseFile(dirname(__DIR__, 2) . '/config/resources.yaml')['resources'];
     }
 }

@@ -9,7 +9,6 @@ namespace Rmr\Http;
 use Rmr\Http\Exception\HttpException;
 use Rmr\Http\Exception\NotAcceptableHttpException;
 use Rmr\Http\Formatter\FormatterFactory;
-use Rmr\Operation\ResourceOperationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -44,9 +43,9 @@ final class Kernel
     {
         $this->env = $env;
 
-        $this->initializeContainer();
+        $this->container = $this->initializeContainer();
+        $this->router = $this->initializeRouter();
 
-        $this->router = new Router($this->container);
         $this->booted = true;
 
         return $this;
@@ -104,7 +103,6 @@ final class Kernel
             throw $e;
         }
 
-        /** @var ResourceOperationInterface $operation */
         return $formatter->format($output, $operation->getResponseStatus());
     }
 
@@ -112,14 +110,27 @@ final class Kernel
      * Initializes DI container
      *
      * @throws \Exception
+     * @return ContainerInterface
      */
-    private function initializeContainer(): void
+    private function initializeContainer(): ContainerInterface
     {
-        $this->container = new ContainerBuilder();
+        $container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($this->container, new FileLocator(dirname(__DIR__, 2) . '/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__, 2) . '/config'));
         $loader->load('services.yaml');
 
-        $this->container->compile();
+        $container->compile();
+
+        return $container;
+    }
+
+    /**
+     * Initializes HTTP router
+     *
+     * @return Router
+     */
+    private function initializeRouter(): Router
+    {
+        return new Router($this->container);
     }
 }
