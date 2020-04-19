@@ -1,0 +1,18 @@
+resources:
+  # /clients/{id}
+  Rmr\Resource\Client\ClientResource:
+    # GET /clients/{id}
+    - Rmr\Operation\Client\GetOperation
+    # DELETE /clients/{id}
+    - Rmr\Operation\Client\RemoveOperation
+    # PUT /clients/{id}
+    - Rmr\Operation\Client\ReplaceOperation
+    # PATCH /clients/{id}/email
+    - Rmr\Operation\Client\UpdateEmailOperation
+
+  # /clients
+  Rmr\Resource\Client\ClientCollectionResource:
+    # GET /clients
+    - Rmr\Operation\ClientCollection\GetAllOperation
+    # POST /clients
+    - Rmr\Operation\ClientCollection\CreateOperation

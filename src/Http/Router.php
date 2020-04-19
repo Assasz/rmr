@@ -11,6 +11,7 @@ use Rmr\Operation\ResourceOperationInterface;
 use Rmr\Resource\AbstractResource;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Router
@@ -21,6 +22,9 @@ class Router
     /** @var ContainerInterface */
     private $container;
 
+    /** @var array */
+    private $resourceMap;
+
     /**
      * Router constructor.
      * @param ContainerInterface $container
@@ -28,6 +32,7 @@ class Router
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->resourceMap = Yaml::parseFile(dirname(__DIR__, 2) . '/config/resources.yaml')['resources'];
     }
 
     /**
@@ -39,7 +44,7 @@ class Router
      */
     public function findResourceOperation(Request $request): callable
     {
-        foreach ((new RouteMap())->get() as $resource => $operations) {
+        foreach ($this->resourceMap as $resource => $operations) {
             try {
                 /** @var callable $operation */
                 $operation = $this->initializeResource($resource, $operations)->getOperation($request->getMethod(), $request->getPathInfo());
@@ -50,11 +55,7 @@ class Router
             }
         }
 
-        if (false === is_callable($operation ?? null)) {
-            throw new NotFoundHttpException();
-        }
-
-        return $operation;
+        return $operation ?? static function () { throw new NotFoundHttpException(); };
     }
 
     /**

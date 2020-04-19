@@ -1,0 +1,3 @@
+formatters:
+  '*/*': Rmr\Http\Formatter\JsonFormatter
+  application/json: Rmr\Http\Formatter\JsonFormatter
