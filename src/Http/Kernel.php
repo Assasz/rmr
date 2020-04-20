@@ -9,6 +9,7 @@ namespace Rmr\Http;
 use Rmr\Http\Exception\HttpException;
 use Rmr\Http\Exception\NotAcceptableHttpException;
 use Rmr\Http\Formatter\FormatterFactory;
+use Rmr\Http\Formatter\FormatterInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -98,10 +99,13 @@ final class Kernel
 
         try {
             $formatter = FormatterFactory::create($request->getAcceptableContentTypes(), $this->getConfigLocator());
-            $operation = $this->router->findResourceOperation($request);
-            $output = $operation($request);
         } catch (NotAcceptableHttpException $e) {
             return new Response($e->getMessage(), $e->getStatusCode());
+        }
+
+        try {
+            $operation = $this->router->findResourceOperation($request);
+            $output = $operation($request);
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
         } catch (\Throwable $e) {
