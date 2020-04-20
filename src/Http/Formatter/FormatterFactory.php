@@ -7,6 +7,7 @@
 namespace Rmr\Http\Formatter;
 
 use Rmr\Http\Exception\NotAcceptableHttpException;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -18,13 +19,14 @@ class FormatterFactory
     /**
      * Creates formatter for first acceptable format
      *
-     * @param array $acceptableFormats
+     * @param string[] $acceptableFormats
+     * @param FileLocatorInterface $fileLocator
      * @return FormatterInterface
      * @throws NotAcceptableHttpException if proper formatter does not exist
      */
-    public static function create(array $acceptableFormats = ['*/*']): FormatterInterface
+    public static function create(array $acceptableFormats, FileLocatorInterface $fileLocator): FormatterInterface
     {
-        $formatters = Yaml::parseFile(dirname(__DIR__, 3) . '/config/formatters.yaml')['formatters'];
+        $formatters = Yaml::parseFile($fileLocator->locate('formatters.yaml'))['formatters'];
 
         foreach ($acceptableFormats as $format) {
             if (true === array_key_exists($format, $formatters)) {

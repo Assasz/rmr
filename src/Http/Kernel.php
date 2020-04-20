@@ -10,6 +10,7 @@ use Rmr\Http\Exception\HttpException;
 use Rmr\Http\Exception\NotAcceptableHttpException;
 use Rmr\Http\Formatter\FormatterFactory;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -76,6 +77,14 @@ final class Kernel
     }
 
     /**
+     * @return FileLocatorInterface
+     */
+    public function getConfigLocator(): FileLocatorInterface
+    {
+        return new FileLocator(dirname(__DIR__, 2) . '/config');
+    }
+
+    /**
      * @param Request $request
      * @return Response
      * @throws \RuntimeException if kernel is not booted
@@ -88,7 +97,7 @@ final class Kernel
         }
 
         try {
-            $formatter = FormatterFactory::create($request->getAcceptableContentTypes());
+            $formatter = FormatterFactory::create($request->getAcceptableContentTypes(), $this->getConfigLocator());
             $operation = $this->router->findResourceOperation($request);
             $output = $operation($request);
         } catch (NotAcceptableHttpException $e) {
@@ -116,7 +125,7 @@ final class Kernel
     {
         $container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__, 2) . '/config'));
+        $loader = new YamlFileLoader($container, $this->getConfigLocator());
         $loader->load('services.yaml');
 
         $container->compile();
@@ -131,6 +140,8 @@ final class Kernel
      */
     private function initializeRouter(): Router
     {
-        return new Router($this->container);
+        return new Router(
+            new ResourceLoader($this->container, $this->getConfigLocator())
+        );
     }
 }

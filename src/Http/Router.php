@@ -8,10 +8,7 @@ namespace Rmr\Http;
 
 use Rmr\Http\Exception\NotFoundHttpException;
 use Rmr\Operation\ResourceOperationInterface;
-use Rmr\Resource\AbstractResource;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Router
@@ -19,20 +16,16 @@ use Symfony\Component\Yaml\Yaml;
  */
 class Router
 {
-    /** @var ContainerInterface */
-    private $container;
-
-    /** @var array */
-    private $resourceMap;
+    /** @var ResourceLoader */
+    private $resourceLoader;
 
     /**
      * Router constructor.
-     * @param ContainerInterface $container
+     * @param ResourceLoader $resourceLoader
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ResourceLoader $resourceLoader)
     {
-        $this->container = $container;
-        $this->resourceMap = $this->parseResourceMap();
+        $this->resourceLoader = $resourceLoader;
     }
 
     /**
@@ -46,9 +39,11 @@ class Router
     {
         $operation = null;
 
-        foreach ($this->resourceMap as $resource => $operations) {
+        foreach ($this->resourceLoader->getResources() as $resource) {
             try {
-                $operation = $this->initializeResource($resource, $operations)->getOperation($request->getMethod(), $request->getPathInfo());
+                $operation = $this->resourceLoader
+                    ->loadResource($resource)
+                    ->getOperation($request->getMethod(), $request->getPathInfo());
 
                 break;
             } catch (NotFoundHttpException $e) {
@@ -61,32 +56,5 @@ class Router
         }
 
         return $operation;
-    }
-
-    /**
-     * @param string $resourceClass
-     * @param array $operations
-     * @return AbstractResource
-     */
-    private function initializeResource(string $resourceClass, array $operations): AbstractResource
-    {
-        /** @var AbstractResource $resource */
-        $resource = $this->container->get($resourceClass);
-
-        foreach ($operations as $operationClass) {
-            /** @var ResourceOperationInterface $operation */
-            $operation = $this->container->get($operationClass);
-            $resource->addOperation($operation);
-        }
-
-        return $resource;
-    }
-
-    /**
-     * @return array
-     */
-    private function parseResourceMap(): array
-    {
-        return Yaml::parseFile(dirname(__DIR__, 2) . '/config/resources.yaml')['resources'];
     }
 }
