@@ -9,7 +9,6 @@ namespace Rmr\Http;
 use Rmr\Http\Exception\HttpException;
 use Rmr\Http\Exception\NotAcceptableHttpException;
 use Rmr\Http\Formatter\FormatterFactory;
-use Rmr\Http\Formatter\FormatterInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -24,9 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Kernel
 {
-    /** @var Router */
-    private $router;
-
     /** @var ContainerInterface */
     private $container;
 
@@ -44,10 +40,7 @@ final class Kernel
     public function boot(string $env = 'dev'): self
     {
         $this->env = $env;
-
         $this->container = $this->initializeContainer();
-        $this->router = $this->initializeRouter();
-
         $this->booted = true;
 
         return $this;
@@ -58,10 +51,18 @@ final class Kernel
      */
     public function shutdown(): self
     {
-        $this->container = $this->router = null;
+        $this->container = null;
         $this->booted = false;
 
         return $this;
+    }
+
+    /**
+     * @return FileLocatorInterface
+     */
+    public function getConfigLocator(): FileLocatorInterface
+    {
+        return new FileLocator(dirname(__DIR__, 2) . '/config');
     }
 
     /**
@@ -78,14 +79,6 @@ final class Kernel
     }
 
     /**
-     * @return FileLocatorInterface
-     */
-    public function getConfigLocator(): FileLocatorInterface
-    {
-        return new FileLocator(dirname(__DIR__, 2) . '/config');
-    }
-
-    /**
      * @param Request $request
      * @return Response
      * @throws \RuntimeException if kernel is not booted
@@ -98,13 +91,13 @@ final class Kernel
         }
 
         try {
-            $formatter = FormatterFactory::create($request->getAcceptableContentTypes(), $this->getConfigLocator());
+            $formatter = $this->initializeFormatterFactory()->create($request->getAcceptableContentTypes());
         } catch (NotAcceptableHttpException $e) {
             return new Response($e->getMessage(), $e->getStatusCode());
         }
 
         try {
-            $operation = $this->router->findResourceOperation($request);
+            $operation = $this->initializeRouter()->findResourceOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
@@ -120,8 +113,6 @@ final class Kernel
     }
 
     /**
-     * Initializes DI container
-     *
      * @throws \Exception
      * @return ContainerInterface
      */
@@ -138,14 +129,18 @@ final class Kernel
     }
 
     /**
-     * Initializes HTTP router
-     *
      * @return Router
      */
     private function initializeRouter(): Router
     {
-        return new Router(
-            new ResourceLoader($this->container, $this->getConfigLocator())
-        );
+        return new Router(new ResourceLoader($this->getContainer(), $this->getConfigLocator()));
+    }
+
+    /**
+     * @return FormatterFactory
+     */
+    private function initializeFormatterFactory(): FormatterFactory
+    {
+        return new FormatterFactory($this->getConfigLocator());
     }
 }

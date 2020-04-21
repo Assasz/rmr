@@ -32,7 +32,7 @@ class ResourceLoader
     public function __construct(ContainerInterface $container, FileLocatorInterface $fileLocator)
     {
         $this->container = $container;
-        $this->resourceMap = Yaml::parseFile($fileLocator->locate('resources.yaml'))['resources'];
+        $this->resourceMap = $this->parseResourceMap($fileLocator->locate('resources.yaml'));
     }
 
     /**
@@ -66,5 +66,14 @@ class ResourceLoader
         }
 
         return $resource;
+    }
+
+    /**
+     * @param string $file
+     * @return array
+     */
+    private function parseResourceMap(string $file): array
+    {
+        return Yaml::parseFile($file)['resources'];
     }
 }
