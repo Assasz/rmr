@@ -35,7 +35,7 @@ class FormatterFactory
      * @return FormatterInterface
      * @throws NotAcceptableHttpException if proper formatter does not exist
      */
-    public function create(array $acceptableFormats): FormatterInterface
+    public function create(string ...$acceptableFormats): FormatterInterface
     {
         foreach ($acceptableFormats as $format) {
             if (true === array_key_exists($format, $this->formatters)) {

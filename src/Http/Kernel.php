@@ -91,7 +91,7 @@ final class Kernel
         }
 
         try {
-            $formatter = $this->initializeFormatterFactory()->create($request->getAcceptableContentTypes());
+            $formatter = $this->initializeFormatterFactory()->create(...$request->getAcceptableContentTypes());
         } catch (NotAcceptableHttpException $e) {
             return new Response($e->getMessage(), $e->getStatusCode());
         }

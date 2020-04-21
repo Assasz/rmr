@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateEmailOperation extends AbstractOperation
 {
-
     /** @var ClientResource */
     protected $resource;
 
