@@ -12,7 +12,7 @@ from ADR architecture.
 **Resources** are in turn a core of business (or application) layer,
 where high-level business rules are applied on domain objects, with the cooperation of 
 persistence layer (via abstraction, in order to not violate the dependency rule).
-But it's still aware of a RESTful system. Resources respond to the standard 
+But they're still aware of a RESTful system. Resources respond to the standard 
 HTTP methods and - still - have a bit of controller inside (e.g. they can throw HTTP exceptions).
 
 **Representation** of the resource here is just JSON formatted content of the response.
