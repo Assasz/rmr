@@ -1,7 +1,7 @@
 ## Resource-Method-Representation
 
 More about this exact architecture [here](https://www.peej.co.uk/articles/rmr-architecture.html).
-This code is my own implementation variant, which comes to life as a result of long nights 
+Code above is my own implementation variant, which came to life as a result of long nights 
 in quarantine ;) It's still under development, though.
 
 I would rather call it **ROR** (Resource-Operation-Representation) architecture, 
