@@ -1,4 +1,4 @@
-### Resource-Method-Representation
+## Resource-Method-Representation
 
 More about this exact architecture [here](https://www.peej.co.uk/articles/rmr-architecture.html).
 This code is my own implementation variant, which comes to life as a result of long nights 
@@ -19,7 +19,7 @@ They respond to the standard HTTP methods and - still - have a bit of controller
 It's operation's responsibility to expose resource in a wire format - JSON in 
 this case. To achieve that, Symfony Serializer comes with help.
 
-#### If you want to play too...
+### If you want to play too...
 
 Clone repository and install dependencies:
 
