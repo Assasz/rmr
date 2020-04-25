@@ -19,6 +19,7 @@ services:
 
   Rmr\Operation\:
     resource: '../src/Operation'
+    exclude: '../src/Operation/Dto'
     public: true
 
   entity_manager.adapter:

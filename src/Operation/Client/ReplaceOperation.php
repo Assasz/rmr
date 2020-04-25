@@ -8,6 +8,7 @@ namespace Rmr\Operation\Client;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
+use Rmr\Operation\Dto\ClientIri;
 use Rmr\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,9 +39,9 @@ class ReplaceOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return string
+     * @return ClientIri
      */
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ClientIri
     {
         $client = $this->resource->retrieve();
 
@@ -51,6 +52,6 @@ class ReplaceOperation extends AbstractOperation
         $this->validate($newClient, 'Client');
         $this->resource->replace($newClient);
 
-        return $this->jsonRepresentation(['client' => (string)$newClient]);
+        return new ClientIri($newClient);
     }
 }

@@ -8,6 +8,7 @@ namespace Rmr\Operation\Client;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
+use Rmr\Operation\Dto\ClientIri;
 use Rmr\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,9 +39,9 @@ class UpdateEmailOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return string
+     * @return ClientIri
      */
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ClientIri
     {
         /** @var Client $body */
         $body = $this->fromJsonBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
@@ -48,6 +49,6 @@ class UpdateEmailOperation extends AbstractOperation
         $this->validate($body, 'ClientEmail');
         $this->resource->updateEmail($body->getEmail());
 
-        return $this->jsonRepresentation(['client' => (string)$this->resource->retrieve()]);
+        return new ClientIri($this->resource->retrieve());
     }
 }

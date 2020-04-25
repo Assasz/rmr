@@ -8,6 +8,7 @@ namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Entity\Client;
 use Rmr\Operation\AbstractOperation;
+use Rmr\Operation\Dto\ClientIri;
 use Rmr\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,15 +49,16 @@ class CreateOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return string
+     * @return ClientIri
      */
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ClientIri
     {
+        /** @var Client $client */
         $client = $this->fromJsonBody($request, Client::class);
 
         $this->validate($client, 'Client');
         $this->resource->insert($client);
 
-        return $this->jsonRepresentation(['client' => (string)$client]);
+        return new ClientIri($client);
     }
 }
