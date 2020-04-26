@@ -23,14 +23,13 @@ class SerializerAdapter
     private $serializer;
 
     /**
-     * @param object|array $data
-     * @param string $format
+     * @param array|object $data
      * @param array $context
-     * @return string
+     * @return array
      */
-    public function serialize($data, string $format, array $context = []): string
+    public function normalize($data, array $context = []): array
     {
-        return $this->serializer->serialize($data, $format, $context);
+        return $this->serializer->normalize($data, null, $context);
     }
 
     /**

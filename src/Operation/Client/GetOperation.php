@@ -37,10 +37,10 @@ class GetOperation extends AbstractOperation
 
     /**
      * @param Request $request
-     * @return string
+     * @return array
      */
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): array
     {
-        return $this->jsonRepresentation($this->resource->retrieve(), 'Client', ['groups' => 'read']);
+        return $this->normalizeResource($this->resource->retrieve(), 'Client', ['groups' => 'read']);
     }
 }

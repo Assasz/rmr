@@ -43,30 +43,31 @@ trait ControllerTrait
     }
 
     /**
-     * Returns JSON deserialized request body in form of entity object
+     * Returns deserialized request body in form of entity object
      *
      * @param Request $request
      * @param string $entityClass
      * @param string|null $definition
      * @param array $context
+     * @param string $format
      * @return object
      */
-    protected function fromJsonBody(Request $request, string $entityClass, string $definition = null, array $context = []): object
+    protected function deserializeBody(Request $request, string $entityClass, string $definition = null, array $context = [], string $format = 'json'): object
     {
-        return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, 'json', $context);
+        return $this->serializer->setup($definition)->deserialize($request->getContent(), $entityClass, $format, $context);
     }
 
     /**
-     * Returns JSON representation of the resource
+     * Returns normalized representation of the resource
      *
      * @param object|array $resource
      * @param string|null $definition
      * @param array $context
-     * @return string
+     * @return array
      */
-    protected function jsonRepresentation($resource, string $definition = null, array $context = []): string
+    protected function normalizeResource($resource, string $definition = null, array $context = []): array
     {
-        return $this->serializer->setup($definition)->serialize($resource, 'json', $context);
+        return $this->serializer->setup($definition)->normalize($resource, $context);
     }
 
     /**
