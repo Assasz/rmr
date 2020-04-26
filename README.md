@@ -14,9 +14,10 @@ where high-level business logic is applied on domain objects. But they're still 
 of a RESTful system. Resources respond to the standard HTTP methods and - still - have 
 a bit of controller inside (e.g. they can throw HTTP exceptions).
 
-**Representation** of the resource here is just JSON formatted content of the response.
-It's operation's responsibility to expose resource in a wire format - JSON in 
-this case. To achieve that, Symfony Serializer comes with help.
+**Representation** of the resource is just a formatted content of the response.
+Operation should not know the output format of the resource, but it should expose that
+resource in normalized form instead. It's formatter's responsibility to render resource 
+in a wire format - JSON or XML in this case. 
 
 ### If you want to play too...
 

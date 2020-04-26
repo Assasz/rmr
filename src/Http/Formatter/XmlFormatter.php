@@ -6,20 +6,22 @@
 
 namespace Rmr\Http\Formatter;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
 /**
- * Class JsonFormatter
+ * Class XmlFormatter
  * @package Rmr\Http\Formatter
  */
-class JsonFormatter implements FormatterInterface
+class XmlFormatter implements FormatterInterface
 {
     /**
      * {@inheritdoc}
      */
     public function format($content, int $statusCode): Response
     {
-        return new JsonResponse($content, $statusCode);
+        $xmlContent = (new XmlEncoder())->encode($content, 'xml');
+
+        return new Response($xmlContent, $statusCode, ['Content-Type' => 'text/xml']);
     }
 }

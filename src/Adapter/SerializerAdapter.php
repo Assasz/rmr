@@ -8,6 +8,7 @@ namespace Rmr\Adapter;
 
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -66,6 +67,6 @@ class SerializerAdapter
      */
     private function getEncoders(): array
     {
-        return [new JsonEncoder()];
+        return [new JsonEncoder(), new XmlEncoder()];
     }
 }
