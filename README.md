@@ -16,10 +16,10 @@ a bit of controller inside (e.g. they can throw HTTP exceptions).
 
 **Representation** of the resource is just a formatted content of the response.
 Operation should not know the output format of the resource, but it should expose that
-resource in normalized form instead. It's formatter's responsibility to render resource 
-in a wire format - JSON or XML in this case. 
+resource in normalized form instead - then it's formatter's responsibility to render 
+resource in a wire format - JSON or XML in this case. 
 
-### If you want to play too...
+### Installation
 
 Clone repository and install dependencies:
 
