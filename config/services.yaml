@@ -11,10 +11,10 @@ services:
   # this creates a service per class whose id is the fully-qualified class name
   Rmr\:
     resource: '../src/*'
-    exclude: '../src/{Entity, Http}'
+    exclude: '../src/{Domain, Infrastructure/Http}'
 
-  Rmr\Resource\:
-    resource: '../src/Resource'
+  Rmr\Application\Resource\:
+    resource: '../src/Application/Resource'
     public: true
 
   Rmr\Operation\:
@@ -23,5 +23,5 @@ services:
     public: true
 
   entity_manager.adapter:
-    class: Rmr\Adapter\EntityManagerAdapter
+    class: Rmr\Infrastructure\Adapter\EntityManagerAdapter
     public: true

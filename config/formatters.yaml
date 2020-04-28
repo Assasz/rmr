@@ -1,4 +1,4 @@
 formatters:
-  '*/*': Rmr\Http\Formatter\JsonFormatter
-  application/json: Rmr\Http\Formatter\JsonFormatter
-  text/xml: Rmr\Http\Formatter\XmlFormatter
+  '*/*': Rmr\Infrastructure\Http\Formatter\JsonFormatter
+  application/json: Rmr\Infrastructure\Http\Formatter\JsonFormatter
+  text/xml: Rmr\Infrastructure\Http\Formatter\XmlFormatter

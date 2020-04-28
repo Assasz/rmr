@@ -6,7 +6,8 @@
 
 namespace Rmr\Operation\Dto;
 
-use Rmr\Entity\Client;
+use Rmr\Domain\Entity\Client;
+use Rmr\Application\Resource\Client\ClientResource;
 
 /**
  * Class ClientIri
@@ -23,6 +24,6 @@ final class ClientIri
      */
     public function __construct(Client $client)
     {
-        $this->client = "/clients/{$client->getId()}";
+        $this->client = ClientResource::ROOT_PATH . $client->getId();
     }
 }

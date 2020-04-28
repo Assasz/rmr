@@ -1,5 +1,5 @@
 resources:
-  Rmr\Resource\Client\ClientResource:
+  Rmr\Application\Resource\Client\ClientResource:
     # GET /clients/{id}
     - Rmr\Operation\Client\GetOperation
     # DELETE /clients/{id}
@@ -9,12 +9,12 @@ resources:
     # PATCH /clients/{id}/email
     - Rmr\Operation\Client\UpdateEmailOperation
 
-  Rmr\Resource\Client\ClientCollectionResource:
+  Rmr\Application\Resource\Client\ClientCollectionResource:
     # GET /clients
     - Rmr\Operation\ClientCollection\GetAllOperation
     # POST /clients
     - Rmr\Operation\ClientCollection\CreateOperation
 
-  Rmr\Resource\Order\OrderCollectionResource:
+  Rmr\Application\Resource\Order\OrderCollectionResource:
     # GET /orders
     - Rmr\Operation\OrderCollection\GetAllOperation

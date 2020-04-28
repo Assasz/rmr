@@ -7,7 +7,7 @@
 namespace Rmr\Operation\ClientCollection;
 
 use Rmr\Operation\AbstractOperation;
-use Rmr\Resource\Client\ClientCollectionResource;
+use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

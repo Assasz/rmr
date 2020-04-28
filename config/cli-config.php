@@ -1,9 +1,9 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Rmr\Http\Kernel;
-use Rmr\Utils\Debug;
-use Rmr\Adapter\EntityManagerAdapter;
+use Rmr\Infrastructure\Http\Kernel;
+use Rmr\Infrastructure\Utils\Debug;
+use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
 
 require __DIR__ . '/bootstrap.php';
 

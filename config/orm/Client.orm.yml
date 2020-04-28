@@ -1,6 +1,6 @@
-Rmr\Entity\Client:
+Rmr\Domain\Entity\Client:
   type: entity
-  repositoryClass: Rmr\Repository\ClientRepository
+  repositoryClass: Rmr\Infrastructure\Repository\ClientRepository
   table: clients
   id:
     id:

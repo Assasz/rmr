@@ -1,4 +1,4 @@
-Rmr\Entity\Product:
+Rmr\Domain\Entity\Product:
   attributes:
     id:
       groups: ['read']

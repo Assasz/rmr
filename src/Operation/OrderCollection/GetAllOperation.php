@@ -7,7 +7,7 @@
 namespace Rmr\Operation\OrderCollection;
 
 use Rmr\Operation\AbstractOperation;
-use Rmr\Resource\Order\OrderCollectionResource;
+use Rmr\Application\Resource\Order\OrderCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

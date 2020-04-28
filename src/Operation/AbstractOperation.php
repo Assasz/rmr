@@ -6,7 +6,7 @@
 
 namespace Rmr\Operation;
 
-use Rmr\Resource\AbstractResource;
+use Rmr\Application\Resource\AbstractResource;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

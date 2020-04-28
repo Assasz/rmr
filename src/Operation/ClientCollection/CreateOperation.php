@@ -6,10 +6,10 @@
 
 namespace Rmr\Operation\ClientCollection;
 
-use Rmr\Entity\Client;
+use Rmr\Domain\Entity\Client;
 use Rmr\Operation\AbstractOperation;
 use Rmr\Operation\Dto\ClientIri;
-use Rmr\Resource\Client\ClientCollectionResource;
+use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

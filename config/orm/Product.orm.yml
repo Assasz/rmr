@@ -1,6 +1,6 @@
-Rmr\Entity\Product:
+Rmr\Domain\Entity\Product:
   type: entity
-  repositoryClass: Rmr\Repository\ProductRepository
+  repositoryClass: Rmr\Infrastructure\Repository\ProductRepository
   table: products
   id:
     id:
@@ -12,5 +12,6 @@ Rmr\Entity\Product:
       type: string
       length: 50
     priceTotal:
-      type: string
-      length: 50
+      type: decimal
+      precision: 7
+      scale: 2

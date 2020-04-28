@@ -1,4 +1,4 @@
-Rmr\Entity\Order:
+Rmr\Domain\Entity\Order:
   attributes:
     id:
       groups: ['read']
@@ -7,14 +7,14 @@ Rmr\Entity\Order:
     orderProducts:
       groups: ['read']
 
-Rmr\Entity\OrderProduct:
+Rmr\Domain\Entity\OrderProduct:
   attributes:
     product:
       groups: ['read']
     quantity:
       groups: ['read']
 
-Rmr\Entity\Product:
+Rmr\Domain\Entity\Product:
   attributes:
     name:
       groups: ['read']

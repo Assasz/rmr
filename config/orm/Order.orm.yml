@@ -1,6 +1,6 @@
-Rmr\Entity\Order:
+Rmr\Domain\Entity\Order:
   type: entity
-  repositoryClass: Rmr\Repository\OrderRepository
+  repositoryClass: Rmr\Infrastructure\Repository\OrderRepository
   table: orders
   id:
     id:
@@ -14,3 +14,4 @@ Rmr\Entity\Order:
     orderProducts:
       targetEntity: OrderProduct
       mappedBy: order
+      cascade: ['persist']

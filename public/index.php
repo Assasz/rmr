@@ -3,8 +3,8 @@
 require dirname(__DIR__) . '/config/bootstrap.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Rmr\Http\Kernel;
-use Rmr\Utils\Debug;
+use Rmr\Infrastructure\Http\Kernel;
+use Rmr\Infrastructure\Utils\Debug;
 
 Debug::web();
 

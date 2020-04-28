@@ -6,10 +6,10 @@
 
 namespace Rmr\Operation;
 
-use Rmr\Adapter\SerializerAdapter;
-use Rmr\Adapter\ValidatorAdapter;
-use Rmr\Exception\InvalidEntityException;
-use Rmr\Http\Exception\BadRequestHttpException;
+use Rmr\Infrastructure\Adapter\SerializerAdapter;
+use Rmr\Infrastructure\Adapter\ValidatorAdapter;
+use Rmr\Infrastructure\Exception\InvalidEntityException;
+use Rmr\Infrastructure\Http\Exception\BadRequestHttpException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
