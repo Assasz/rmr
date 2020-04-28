@@ -1,0 +1,23 @@
+Rmr\Entity\Order:
+  attributes:
+    id:
+      groups: ['read']
+    dateCreated:
+      groups: ['read']
+    orderProducts:
+      groups: ['read']
+
+Rmr\Entity\OrderProduct:
+  attributes:
+    product:
+      groups: ['read']
+    quantity:
+      groups: ['read']
+
+Rmr\Entity\Product:
+  attributes:
+    name:
+      groups: ['read']
+    priceTotal:
+      groups: ['read']
+

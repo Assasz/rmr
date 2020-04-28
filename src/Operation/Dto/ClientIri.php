@@ -23,6 +23,6 @@ final class ClientIri
      */
     public function __construct(Client $client)
     {
-        $this->client = (string)$client;
+        $this->client = "/clients/{$client->getId()}";
     }
 }

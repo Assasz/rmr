@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use Rmr\Contract\Adapter\EntityManagerAdapterInterface;
+use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 
 /**
  * Class EntityManagerAdapter
@@ -99,6 +100,7 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
         $config = Setup::createConfiguration();
         $config->setMetadataDriverImpl($driver);
         $config->addEntityNamespace('Entity', $entityNamespace);
+        $config->setNamingStrategy(new UnderscoreNamingStrategy());
 
         $connection = DriverManager::getConnection(['url' => $_ENV['DATABASE_URL']], $config);
 

@@ -1,0 +1,16 @@
+Rmr\Entity\Product:
+  type: entity
+  repositoryClass: Rmr\Repository\ProductRepository
+  table: products
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 50
+    priceTotal:
+      type: string
+      length: 50

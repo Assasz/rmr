@@ -1,0 +1,23 @@
+Rmr\Entity\OrderProduct:
+  type: entity
+  table: orders_products
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    quantity:
+      type: integer
+  manyToOne:
+    order:
+      targetEntity: Order
+      inversedBy: orderProducts
+      joinColumn:
+        name: id_order
+        referencedColumnName: id
+    product:
+      targetEntity: Product
+      joinColumn:
+        name: id_product
+        referencedColumnName: id

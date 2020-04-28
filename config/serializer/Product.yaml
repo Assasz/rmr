@@ -1,0 +1,10 @@
+Rmr\Entity\Product:
+  attributes:
+    id:
+      groups: ['read']
+    name:
+      groups: ['read']
+    priceTotal:
+      groups: ['read']
+    order:
+      groups: ['read']

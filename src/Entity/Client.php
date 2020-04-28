@@ -99,9 +99,4 @@ class Client
 
         return $this;
     }
-
-    public function __toString(): string
-    {
-        return "/clients/{$this->id}";
-    }
 }

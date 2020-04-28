@@ -1,0 +1,16 @@
+Rmr\Entity\Order:
+  type: entity
+  repositoryClass: Rmr\Repository\OrderRepository
+  table: orders
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    dateCreated:
+      type: datetime
+  oneToMany:
+    orderProducts:
+      targetEntity: OrderProduct
+      mappedBy: order
