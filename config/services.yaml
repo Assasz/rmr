@@ -17,9 +17,9 @@ services:
     resource: '../src/Application/Resource'
     public: true
 
-  Rmr\Operation\:
-    resource: '../src/Operation'
-    exclude: '../src/Operation/Dto'
+  Rmr\Ports\Operation\:
+    resource: '../src/Ports/Operation'
+    exclude: '../src/Ports/Operation/Dto'
     public: true
 
   entity_manager.adapter:

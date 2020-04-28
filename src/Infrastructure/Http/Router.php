@@ -7,7 +7,7 @@
 namespace Rmr\Infrastructure\Http;
 
 use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
-use Rmr\Operation\ResourceOperationInterface;
+use Rmr\Ports\Operation\ResourceOperationInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

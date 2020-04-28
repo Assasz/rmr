@@ -4,14 +4,14 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\Dto;
+namespace Rmr\Ports\Operation\Dto;
 
 use Rmr\Domain\Entity\Client;
 use Rmr\Application\Resource\Client\ClientResource;
 
 /**
  * Class ClientIri
- * @package Rmr\Operation\Dto
+ * @package Rmr\Ports\Operation\Dto
  */
 final class ClientIri
 {

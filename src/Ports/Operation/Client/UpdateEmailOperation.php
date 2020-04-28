@@ -4,17 +4,17 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\Client;
+namespace Rmr\Ports\Operation\Client;
 
 use Rmr\Domain\Entity\Client;
-use Rmr\Operation\AbstractOperation;
-use Rmr\Operation\Dto\ClientIri;
+use Rmr\Ports\Operation\AbstractOperation;
+use Rmr\Ports\Operation\Dto\ClientIri;
 use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UpdateEmailOperation
- * @package Rmr\Operation\Client
+ * @package Rmr\Ports\Operation\Client
  */
 class UpdateEmailOperation extends AbstractOperation
 {

@@ -6,7 +6,7 @@
 
 namespace Rmr\Infrastructure\Http;
 
-use Rmr\Operation\ResourceOperationInterface;
+use Rmr\Ports\Operation\ResourceOperationInterface;
 use Rmr\Application\Resource\AbstractResource;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;

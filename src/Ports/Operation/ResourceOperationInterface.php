@@ -4,13 +4,13 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation;
+namespace Rmr\Ports\Operation;
 
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface ResourceOperationInterface
- * @package Rmr
+ * @package Rmr\Ports\Operation
  */
 interface ResourceOperationInterface
 {

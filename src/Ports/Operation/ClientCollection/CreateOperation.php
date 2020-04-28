@@ -4,18 +4,18 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\ClientCollection;
+namespace Rmr\Ports\Operation\ClientCollection;
 
 use Rmr\Domain\Entity\Client;
-use Rmr\Operation\AbstractOperation;
-use Rmr\Operation\Dto\ClientIri;
+use Rmr\Ports\Operation\AbstractOperation;
+use Rmr\Ports\Operation\Dto\ClientIri;
 use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class CreateOperation
- * @package Rmr\Operation\Client
+ * @package Rmr\Ports\Operation\Client
  */
 class CreateOperation extends AbstractOperation
 {

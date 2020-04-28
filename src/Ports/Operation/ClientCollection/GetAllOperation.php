@@ -4,15 +4,15 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\ClientCollection;
+namespace Rmr\Ports\Operation\ClientCollection;
 
-use Rmr\Operation\AbstractOperation;
+use Rmr\Ports\Operation\AbstractOperation;
 use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class GetAllOperation
- * @package Rmr\Operation\ClientCollection
+ * @package Rmr\Ports\Operation\ClientCollection
  */
 class GetAllOperation extends AbstractOperation
 {

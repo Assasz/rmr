@@ -9,7 +9,7 @@ namespace Rmr\Application\Resource;
 use Cake\Collection\Collection;
 use Rmr\Infrastructure\Http\Exception\MethodNotAllowedHttpException;
 use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
-use Rmr\Operation\ResourceOperationInterface;
+use Rmr\Ports\Operation\ResourceOperationInterface;
 
 /**
  * Class AbstractResource

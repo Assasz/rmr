@@ -4,7 +4,7 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation;
+namespace Rmr\Ports\Operation;
 
 use Rmr\Infrastructure\Adapter\SerializerAdapter;
 use Rmr\Infrastructure\Adapter\ValidatorAdapter;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Trait ControllerTrait
- * @package Rmr\Operation
+ * @package Rmr\Ports\Operation
  */
 trait ControllerTrait
 {

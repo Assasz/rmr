@@ -4,19 +4,19 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\OrderCollection;
+namespace Rmr\Ports\Operation\Client;
 
-use Rmr\Operation\AbstractOperation;
-use Rmr\Application\Resource\Order\OrderCollectionResource;
+use Rmr\Ports\Operation\AbstractOperation;
+use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class GetAllOperation
- * @package Rmr\Operation\OrderCollection
+ * Class GetClientOperation
+ * @package Rmr\Ports\Operation\Client
  */
-class GetAllOperation extends AbstractOperation
+class GetOperation extends AbstractOperation
 {
-    /** @var OrderCollectionResource */
+    /** @var ClientResource */
     protected $resource;
 
     /**
@@ -41,6 +41,6 @@ class GetAllOperation extends AbstractOperation
      */
     public function __invoke(Request $request): array
     {
-        return $this->normalizeResource($this->resource->retrieve()->toList(), 'Order', ['groups' => 'read']);
+        return $this->normalizeResource($this->resource->retrieve(), 'Client', ['groups' => 'read']);
     }
 }

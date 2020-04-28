@@ -4,14 +4,14 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation;
+namespace Rmr\Ports\Operation;
 
 use Rmr\Application\Resource\AbstractResource;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class AbstractOperation
- * @package Rmr\Operation
+ * @package Rmr\Ports\Operation
  */
 abstract class AbstractOperation implements ResourceOperationInterface
 {

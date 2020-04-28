@@ -4,16 +4,16 @@
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 
-namespace Rmr\Operation\Client;
+namespace Rmr\Ports\Operation\Client;
 
-use Rmr\Operation\AbstractOperation;
+use Rmr\Ports\Operation\AbstractOperation;
 use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class RemoveOperation
- * @package Rmr\Operation\Client
+ * @package Rmr\Ports\Operation\Client
  */
 class RemoveOperation extends AbstractOperation
 {
