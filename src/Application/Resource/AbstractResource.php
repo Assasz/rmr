@@ -6,9 +6,6 @@
 
 namespace Rmr\Application\Resource;
 
-use Cake\Collection\Collection;
-use Rmr\Infrastructure\Http\Exception\MethodNotAllowedHttpException;
-use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
 use Rmr\Ports\Operation\ResourceOperationInterface;
 
 /**
@@ -26,6 +23,13 @@ abstract class AbstractResource
     protected $operations = [];
 
     /**
+     * Returns path of the resource
+     *
+     * @return string
+     */
+    abstract public function getPath(): string;
+
+    /**
      * Adds given operation to the resource
      *
      * @param ResourceOperationInterface $operation
@@ -36,64 +40,10 @@ abstract class AbstractResource
     }
 
     /**
-     * Returns resource operation by given HTTP method and URI
-     *
-     * @param string $method
-     * @param string $uri
-     * @return ResourceOperationInterface
-     * @throws NotFoundHttpException if operation does not exist
-     * @throws MethodNotAllowedHttpException if HTTP method does not match any available operation's method
+     * @return ResourceOperationInterface[]
      */
-    public function getOperation(string $method, string $uri): ResourceOperationInterface
+    public function getOperations(): array
     {
-        $operations = $this->getOperationsMatchingUri($uri)->filter(
-            static function (ResourceOperationInterface $operation) use ($method) {
-                return $method === $operation->getMethod();
-            }
-        );
-
-        if (true === $operations->isEmpty()) {
-            throw new MethodNotAllowedHttpException();
-        }
-
-        return $operations->first()->setResource($this);
+        return $this->operations;
     }
-
-    /**
-     * Return resource operations matching given URI
-     *
-     * @param string $uri
-     * @return Collection
-     * @throws NotFoundHttpException if operation does not exist
-     */
-    private function getOperationsMatchingUri(string $uri): Collection
-    {
-        $self = $this;
-
-        $operations = (new Collection($this->operations))->filter(
-            static function (ResourceOperationInterface $operation) use ($uri, $self) {
-                $operationPath = rtrim($operation->getPath(), '/');
-                $uri = rtrim($uri, '/');
-
-                if (true === $isMatch = (bool)preg_match("#^{$self->getPath()}{$operationPath}$#", $uri, $matches)) {
-                    $self->id = $matches['id'] ?? null;
-                }
-
-                return $isMatch;
-            }
-        );
-
-        if (true === $operations->isEmpty()) {
-            throw new NotFoundHttpException();
-        }
-
-        return $operations;
-    }
-
-    /**
-     * Returns path of the resource
-     *
-     * @return string
-     */
-    abstract public function getPath(): string;
 }

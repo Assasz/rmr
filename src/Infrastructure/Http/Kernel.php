@@ -97,7 +97,7 @@ final class Kernel
         }
 
         try {
-            $operation = $this->initializeRouter()->findResourceOperation($request);
+            $operation = $this->initializeRouter()->findOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
