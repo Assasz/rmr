@@ -1,5 +1,14 @@
 {
+  "name": "assasz/rmr",
+  "description": "Implementation variant of RMR architecture in PHP.",
   "type": "project",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Paweł Antosiak",
+      "email": "contact@pawelantosiak.com"
+    }
+  ],
   "require": {
     "php": "^7.2",
     "ext-json": "*",
