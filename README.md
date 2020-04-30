@@ -38,6 +38,6 @@ DATABASE_URL='mysql://user:secret@localhost/mydb'
 ```
 ./vendor/bin/doctrine orm:schema-tool:create
 ./vendor/bin/doctrine orm:schema-tool:update --force
-```
 
-(I will add some fixtures later.)
+php bin/console app:load-fixtures
+```
