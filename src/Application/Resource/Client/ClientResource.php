@@ -12,7 +12,7 @@ use Rmr\Domain\Entity\Client;
 use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
 use Rmr\Infrastructure\Http\Exception\UnprocessableEntityHttpException;
 use Rmr\Application\Resource\AbstractResource;
-use Rmr\Resource\ResourceInterface;
+use Rmr\Application\Resource\ResourceInterface;
 
 /**
  * Class ClientResource

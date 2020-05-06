@@ -34,6 +34,11 @@ class LoadFixturesCommand extends Command
         $this->entityManager = $managerAdapter;
     }
 
+    protected function configure(): void
+    {
+        $this->setDescription('Loads fixtures and persists them in database.');
+    }
+
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
