@@ -21,11 +21,10 @@ resource in a wire format - JSON or XML in this case.
 
 ### Installation
 
-Clone repository and install dependencies:
+Via Composer:
 
 ```
-git clone https://github.com/Assasz/rmr.git
-composer install
+composer create-project assasz/rmr=dev-master
 ```
 
 Set up the database:
