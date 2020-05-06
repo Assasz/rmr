@@ -1,5 +1,9 @@
 <?php
-//TODO: add copyright
+/**
+ * Copyright (c) 2020.
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
+ */
+
 namespace Rmr\Ports\Command;
 
 use Nelmio\Alice\Loader\NativeLoader;
