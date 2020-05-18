@@ -8,7 +8,7 @@ namespace Rmr\Ports\Operation\ClientCollection;
 
 use Rmr\Domain\Entity\Client;
 use Rmr\Ports\Operation\AbstractOperation;
-use Rmr\Ports\Operation\Dto\ClientIri;
+use Rmr\Infrastructure\Dto\ClientIri;
 use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
