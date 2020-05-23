@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
  */
 class EntityManagerAdapter implements EntityManagerAdapterInterface
 {
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
     /**

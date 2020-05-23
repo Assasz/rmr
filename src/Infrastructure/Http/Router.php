@@ -8,6 +8,7 @@ namespace Rmr\Infrastructure\Http;
 
 use Cake\Collection\Collection;
 use Rmr\Application\Resource\AbstractResource;
+use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Rmr\Infrastructure\Http\Exception\MethodNotAllowedHttpException;
 use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
 use Rmr\Ports\Operation\ResourceOperationInterface;
@@ -77,10 +78,10 @@ class Router
     {
         $operations = (new Collection($resource->getOperations()))->filter(
             static function (ResourceOperationInterface $operation) use ($uri, $resource) {
-                $operationPath = rtrim($operation->getPath(), '/');
-                $uri = rtrim($uri, '/');
+                $resourcePath = self::normalize($resource->getPath());
+                $operationPath = self::normalize($operation->getPath());
 
-                if (true === $isMatch = (bool)preg_match("#^{$resource->getPath()}{$operationPath}$#", $uri, $matches)) {
+                if (true === $isMatch = (bool)preg_match("#^{$resourcePath}{$operationPath}$#", self::normalize($uri), $matches)) {
                     $resource->id = $matches['id'] ?? null;
                 }
 
@@ -116,5 +117,14 @@ class Router
         }
 
         return $operations->first();
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private static function normalize(string $path): string
+    {
+        return rtrim($path, '/');
     }
 }
