@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class SerializerAdapter
@@ -20,8 +21,7 @@ use Symfony\Component\Serializer\Serializer;
  */
 class SerializerAdapter
 {
-    /** @var Serializer */
-    private $serializer;
+    private SerializerInterface $serializer;
 
     /**
      * @param array|object $data

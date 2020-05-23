@@ -15,14 +15,11 @@ use Doctrine\Common\Collections\Collection;
  */
 class Order
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var \DateTimeInterface */
-    private $dateCreated;
+    private \DateTimeInterface $dateCreated;
 
-    /** @var Collection|OrderProduct[] */
-    private $orderProducts;
+    private Collection $orderProducts;
 
     /**
      * Order constructor.

@@ -15,8 +15,7 @@ use Rmr\Application\Resource\Client\ClientResource;
  */
 final class ClientIri
 {
-    /** @var string */
-    public $client;
+    public string $client;
 
     /**
      * ClientIri constructor.

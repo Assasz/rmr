@@ -12,8 +12,7 @@ namespace Rmr\Infrastructure\Http\Exception;
  */
 class HttpException extends \RuntimeException
 {
-    /** @var int */
-    private $statusCode;
+    private int $statusCode;
 
     /**
      * HttpException constructor.

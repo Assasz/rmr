@@ -21,8 +21,7 @@ class OrderCollectionResource extends AbstractResource implements CollectionReso
 {
     use EntityManagerAwareTrait;
 
-    /** @var OrderRepositoryInterface */
-    private $orderRepository;
+    private OrderRepositoryInterface $orderRepository;
 
     /**
      * OrderCollectionResource constructor.

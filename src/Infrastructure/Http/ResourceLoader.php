@@ -18,11 +18,9 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ResourceLoader
 {
-    /** @var array */
-    private $resourceMap;
+    private array $resourceMap;
 
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
     /**
      * ResourceLoader constructor.

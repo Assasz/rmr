@@ -20,8 +20,7 @@ class LoadFixturesCommand extends Command
 {
     protected static $defaultName = 'app:load-fixtures';
 
-    /** @var EntityManagerAdapter */
-    private $entityManager;
+    private EntityManagerAdapter $entityManager;
 
     /**
      * LoadFixturesCommand constructor.

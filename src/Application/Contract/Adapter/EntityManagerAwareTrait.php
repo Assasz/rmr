@@ -12,8 +12,7 @@ namespace Rmr\Application\Contract\Adapter;
  */
 trait EntityManagerAwareTrait
 {
-    /** @var EntityManagerAdapterInterface */
-    private $entityManager;
+    private EntityManagerAdapterInterface $entityManager;
 
     /**
      * @required

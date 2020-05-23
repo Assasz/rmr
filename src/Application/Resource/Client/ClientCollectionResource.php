@@ -22,10 +22,7 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
 {
     use EntityManagerAwareTrait;
 
-    /** @var ClientRepositoryInterface */
-    private $clientRepository;
-
-    // we can inject another dependencies (as contracts!) via setters - traits are welcome
+    private ClientRepositoryInterface $clientRepository;
 
     /**
      * ClientCollectionResource constructor.

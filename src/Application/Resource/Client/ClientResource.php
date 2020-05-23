@@ -24,8 +24,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
 
     public const ROOT_PATH = '/clients/';
 
-    /** @var ClientRepositoryInterface */
-    private $clientRepository;
+    private ClientRepositoryInterface $clientRepository;
 
     /**
      * ClientResource constructor.

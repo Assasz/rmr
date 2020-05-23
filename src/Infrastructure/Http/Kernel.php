@@ -23,14 +23,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Kernel
 {
-    /** @var ContainerInterface */
-    private $container;
+    private ?ContainerInterface $container;
 
-    /** @var string */
-    private $env;
+    private string $env;
 
-    /** @var bool */
-    private $booted = false;
+    private bool $booted = false;
 
     /**
      * @param string $env

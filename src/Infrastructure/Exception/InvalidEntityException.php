@@ -14,8 +14,7 @@ use Throwable;
  */
 class InvalidEntityException extends \LogicException
 {
-    /** @var array */
-    private $errors;
+    private array $errors;
 
     /**
      * InvalidEntityException constructor.

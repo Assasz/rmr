@@ -16,8 +16,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class FormatterFactory
 {
-    /** @var array */
-    private $formatters;
+    private array $formatters;
 
     /**
      * FormatterFactory constructor.

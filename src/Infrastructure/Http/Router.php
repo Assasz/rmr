@@ -8,7 +8,6 @@ namespace Rmr\Infrastructure\Http;
 
 use Cake\Collection\Collection;
 use Rmr\Application\Resource\AbstractResource;
-use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Rmr\Infrastructure\Http\Exception\MethodNotAllowedHttpException;
 use Rmr\Infrastructure\Http\Exception\NotFoundHttpException;
 use Rmr\Ports\Operation\ResourceOperationInterface;
@@ -20,8 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Router
 {
-    /** @var ResourceLoader */
-    private $resourceLoader;
+    private ResourceLoader $resourceLoader;
 
     /**
      * Router constructor.

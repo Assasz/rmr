@@ -18,8 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ValidatorAdapter
 {
-    /** @var ValidatorInterface */
-    private $validator;
+    private ValidatorInterface $validator;
 
     /**
      * @param object $entity

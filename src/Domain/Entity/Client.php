@@ -12,17 +12,13 @@ namespace Rmr\Domain\Entity;
  */
 class Client
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $firstname;
+    private string $firstname;
 
-    /** @var string */
-    private $lastname;
+    private string $lastname;
 
-    /** @var string */
-    private $email;
+    private string $email;
 
     /**
      * @return int

@@ -14,14 +14,11 @@ use Money\Money;
  */
 class Product
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var string */
-    private $name;
+    private string$name;
 
-    /** @var string */
-    private $priceTotal;
+    private string $priceTotal;
 
     /**
      * @return int

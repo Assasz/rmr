@@ -14,17 +14,13 @@ use Rmr\Domain\Exception\QuantityTooLowException;
  */
 class OrderProduct
 {
-    /** @var int */
-    private $id;
+    private int $id;
 
-    /** @var Order */
-    private $order;
+    private Order $order;
 
-    /** @var Product */
-    private $product;
+    private Product $product;
 
-    /** @var int */
-    private $quantity;
+    private int $quantity;
 
     /**
      * @return int

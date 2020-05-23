@@ -20,7 +20,7 @@ abstract class AbstractResource
     public $id;
 
     /** @var ResourceOperationInterface[] */
-    protected $operations = [];
+    protected array $operations = [];
 
     /**
      * Returns path of the resource
