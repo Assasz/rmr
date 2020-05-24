@@ -35,7 +35,7 @@ class LoadFixturesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Loads fixtures and persists them in database.');
+        $this->setDescription('Loads fixtures into database.');
     }
 
     /**
@@ -44,6 +44,7 @@ class LoadFixturesCommand extends Command
      * @return int
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Nelmio\Alice\Throwable\LoadingThrowable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -55,7 +56,7 @@ class LoadFixturesCommand extends Command
 
         $this->entityManager->flush();
 
-        $output->writeln('Fixtures generated: ' . count($fixtures->getObjects()));
+        $output->writeln('Fixtures loaded: ' . count($fixtures->getObjects()));
 
         return 0;
     }
