@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class RemoveOperation
  * @package Rmr\Ports\Operation\Client
  */
-class RemoveOperation extends AbstractOperation
+final class RemoveOperation extends AbstractOperation
 {
     /** @var ClientResource */
     protected $resource;

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class Router
  * @package Rmr\Infrastructure\Http
  */
-class Router
+final class Router
 {
     private ResourceLoader $resourceLoader;
 

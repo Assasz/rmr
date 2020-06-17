@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class ReplaceOperation
  * @package Rmr\Ports\Operation\Client
  */
-class ReplaceOperation extends AbstractOperation
+final class ReplaceOperation extends AbstractOperation
 {
     /** @var ClientResource */
     protected $resource;

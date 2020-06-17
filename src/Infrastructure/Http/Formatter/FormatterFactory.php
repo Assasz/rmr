@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
  * Class FormatterFactory
  * @package Rmr\Infrastructure\Http\Formatter
  */
-class FormatterFactory
+final class FormatterFactory
 {
     private array $formatters;
 

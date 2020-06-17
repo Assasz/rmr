@@ -1,6 +1,6 @@
 {
   "name": "assasz/rmr",
-  "description": "Implementation variant of RMR architecture in PHP.",
+  "description": "Implementation variant of RMR architecture.",
   "type": "project",
   "license": "proprietary",
   "authors": [
@@ -15,22 +15,22 @@
     "cakephp/collection": "^3.8",
     "doctrine/orm": "^2.6",
     "filp/whoops": "^2.1",
+    "moneyphp/money": "^3.3",
     "symfony/config": "^5.0",
+    "symfony/console": "^5.0",
     "symfony/dependency-injection": "^5.0",
     "symfony/dotenv": "^5.0",
     "symfony/http-foundation": "^5.0",
-    "symfony/yaml": "^5.0",
-    "symfony/serializer": "^5.0",
     "symfony/property-access": "^5.0",
-    "symfony/validator": "^5.0",
     "symfony/property-info": "^5.0",
-    "moneyphp/money": "^3.3",
-    "symfony/console": "^5.0"
+    "symfony/serializer": "^5.0",
+    "symfony/validator": "^5.0",
+    "symfony/yaml": "^5.0"
   },
   "require-dev": {
+    "nelmio/alice": "^3.6",
     "phpunit/phpunit": "8",
-    "roave/security-advisories": "dev-master",
-    "nelmio/alice": "^3.6"
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {
@@ -41,5 +41,8 @@
     "psr-4": {
       "Rmr\\Tests\\": "tests/"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

@@ -7,6 +7,7 @@
 namespace Rmr\Ports\Command;
 
 use Nelmio\Alice\Loader\NativeLoader;
+use Nelmio\Alice\Throwable\LoadingThrowable;
 use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class LoadFixturesCommand
  * @package Rmr\Ports\Command
  */
-class LoadFixturesCommand extends Command
+final class LoadFixturesCommand extends Command
 {
     protected static $defaultName = 'app:load-fixtures';
 
@@ -35,7 +36,7 @@ class LoadFixturesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Loads fixtures and persists them in database.');
+        $this->setDescription('Loads fixtures into database.');
     }
 
     /**
@@ -44,6 +45,7 @@ class LoadFixturesCommand extends Command
      * @return int
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws LoadingThrowable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

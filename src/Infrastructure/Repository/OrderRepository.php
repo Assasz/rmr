@@ -13,6 +13,7 @@ use Rmr\Domain\Entity\Order;
 /**
  * Class OrderRepository
  * @package Rmr\Infrastructure\Repository
+ * @method find($id, $lockMode = null, $lockVersion = null): ?Order
  */
 class OrderRepository extends AbstractEntityRepository implements OrderRepositoryInterface
 {

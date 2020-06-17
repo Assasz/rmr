@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class GetAllOperation
  * @package Rmr\Ports\Operation\ClientCollection
  */
-class GetAllOperation extends AbstractOperation
+final class GetAllOperation extends AbstractOperation
 {
     /** @var ClientCollectionResource */
     protected $resource;
