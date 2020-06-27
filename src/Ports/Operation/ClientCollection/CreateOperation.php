@@ -17,9 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class CreateOperation
  * @package Rmr\Ports\Operation\Client
  */
-class CreateOperation extends AbstractOperation
+final class CreateOperation extends AbstractOperation
 {
-
     /** @var ClientCollectionResource */
     protected $resource;
 

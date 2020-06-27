@@ -38,7 +38,7 @@ class ClientCollectionResource extends AbstractResource implements CollectionRes
      */
     public function getPath(): string
     {
-        return ClientResource::ROOT_PATH;
+        return ClientResource::PATH;
     }
 
     /**

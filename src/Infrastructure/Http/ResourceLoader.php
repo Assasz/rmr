@@ -16,10 +16,9 @@ use Symfony\Component\Yaml\Yaml;
  * Class ResourceLoader
  * @package Rmr\Infrastructure\Http
  */
-class ResourceLoader
+final class ResourceLoader
 {
     private array $resourceMap;
-
     private ContainerInterface $container;
 
     /**

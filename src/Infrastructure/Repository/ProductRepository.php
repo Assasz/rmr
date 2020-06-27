@@ -13,6 +13,7 @@ use Rmr\Domain\Entity\Product;
 /**
  * Class ProductRepository
  * @package Rmr\Infrastructure\Repository
+ * @method find($id, $lockMode = null, $lockVersion = null): ?Product
  */
 class ProductRepository extends AbstractEntityRepository implements ProductRepositoryInterface
 {

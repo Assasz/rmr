@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class UpdateEmailOperation
  * @package Rmr\Ports\Operation\Client
  */
-class UpdateEmailOperation extends AbstractOperation
+final class UpdateEmailOperation extends AbstractOperation
 {
     /** @var ClientResource */
     protected $resource;

@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 trait ControllerTrait
 {
     protected SerializerAdapter $serializer;
-
     protected ValidatorAdapter $validator;
 
     /**

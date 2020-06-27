@@ -24,9 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 final class Kernel
 {
     private ?ContainerInterface $container;
-
+    private ?Router $router;
+    private ?FormatterFactory $formatterFactory;
     private string $env;
-
     private bool $booted = false;
 
     /**
@@ -37,7 +37,10 @@ final class Kernel
     public function boot(string $env = 'dev'): self
     {
         $this->env = $env;
-        $this->container = $this->initializeContainer();
+
+        $this->initializeContainer();
+        $this->router = new Router(new ResourceLoader($this->getContainer(), $this->getConfigLocator()));
+        $this->formatterFactory = new FormatterFactory($this->getConfigLocator());
         $this->booted = true;
 
         return $this;
@@ -48,7 +51,7 @@ final class Kernel
      */
     public function shutdown(): self
     {
-        $this->container = null;
+        $this->container = $this->router = $this->formatterFactory = null;
         $this->booted = false;
 
         return $this;
@@ -88,13 +91,13 @@ final class Kernel
         }
 
         try {
-            $formatter = $this->initializeFormatterFactory()->create(...$request->getAcceptableContentTypes());
+            $formatter = $this->formatterFactory->create(...$request->getAcceptableContentTypes());
         } catch (NotAcceptableHttpException $e) {
             return new Response($e->getMessage(), $e->getStatusCode());
         }
 
         try {
-            $operation = $this->initializeRouter()->findOperation($request);
+            $operation = $this->router->findOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());
@@ -111,33 +114,14 @@ final class Kernel
 
     /**
      * @throws \Exception
-     * @return ContainerInterface
      */
-    private function initializeContainer(): ContainerInterface
+    private function initializeContainer(): void
     {
-        $container = new ContainerBuilder();
+        $this->container = new ContainerBuilder();
 
-        $loader = new YamlFileLoader($container, $this->getConfigLocator());
+        $loader = new YamlFileLoader($this->container, $this->getConfigLocator());
         $loader->load('services.yaml');
 
-        $container->compile();
-
-        return $container;
-    }
-
-    /**
-     * @return Router
-     */
-    private function initializeRouter(): Router
-    {
-        return new Router(new ResourceLoader($this->getContainer(), $this->getConfigLocator()));
-    }
-
-    /**
-     * @return FormatterFactory
-     */
-    private function initializeFormatterFactory(): FormatterFactory
-    {
-        return new FormatterFactory($this->getConfigLocator());
+        $this->container->compile();
     }
 }

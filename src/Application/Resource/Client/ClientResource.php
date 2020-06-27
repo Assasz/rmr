@@ -22,7 +22,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
 {
     use EntityManagerAwareTrait;
 
-    public const ROOT_PATH = '/clients/';
+    public const PATH = '/clients/';
 
     private ClientRepositoryInterface $clientRepository;
 
@@ -40,7 +40,7 @@ class ClientResource extends AbstractResource implements ResourceInterface
      */
     public function getPath(): string
     {
-         return self::ROOT_PATH . self::NUMERIC_ID;
+         return self::PATH . self::NUMERIC_ID;
     }
 
     /**

@@ -13,6 +13,7 @@ use Rmr\Domain\Entity\Client;
 /**
  * Class ClientRepository
  * @package Rmr\Infrastructure\Repository
+ * @method find($id, $lockMode = null, $lockVersion = null): ?Client
  */
 class ClientRepository extends AbstractEntityRepository implements ClientRepositoryInterface
 {

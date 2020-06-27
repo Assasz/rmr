@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class LoadFixturesCommand
  * @package Rmr\Ports\Command
  */
-class LoadFixturesCommand extends Command
+final class LoadFixturesCommand extends Command
 {
     protected static $defaultName = 'app:load-fixtures';
 

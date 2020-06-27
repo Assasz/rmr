@@ -23,6 +23,6 @@ final class ClientIri
      */
     public function __construct(Client $client)
     {
-        $this->client = ClientResource::ROOT_PATH . $client->getId();
+        $this->client = ClientResource::PATH . $client->getId();
     }
 }
