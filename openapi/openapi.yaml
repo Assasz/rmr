@@ -135,6 +135,7 @@ components:
       properties:
         id:
           type: integer
+          readOnly: true
           example: '1'
         firstname:
           type: string

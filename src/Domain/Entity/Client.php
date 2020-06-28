@@ -6,8 +6,6 @@
 
 namespace Rmr\Domain\Entity;
 
-// TODO: move OA to infrastructure (requests)
-
 /**
  * Class Client
  * @package Rmr\Domain\Entity
@@ -19,7 +17,8 @@ class Client
     /**
      * @OA\Property(
      *     type="integer",
-     *     example="1"
+     *     example="1",
+     *     readOnly=true
      * )
      */
     private int $id;
