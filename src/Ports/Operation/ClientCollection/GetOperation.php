@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\ClientCollection;
 
@@ -11,8 +7,18 @@ use Rmr\Application\Resource\Client\ClientCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class GetOperation
- * @package Rmr\Ports\Operation\ClientCollection
+ * @OA\Get(
+ *     path="/clients",
+ *     summary="Retrieves Client collection resource.",
+ *     tags={"Client"},
+ *     @OA\Response(
+ *         response="200",
+ *         description="The Client collection resource.",
+ *         @OA\JsonContent(type="array",
+ *             @OA\Items(ref="#/components/schemas/Client")
+ *         ),
+ *     )
+ * )
  */
 final class GetOperation extends AbstractOperation
 {
@@ -20,27 +26,27 @@ final class GetOperation extends AbstractOperation
     protected $resource;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getMethod(): string
     {
         return AbstractOperation::GET_METHOD;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-    * @param Request $request
-    * @return array
-    */
+     * @param Request $request
+     * @return array
+     */
     public function __invoke(Request $request): array
     {
-        return $this->normalizeResource($this->resource->retrieve()->toList(), 'Client', ['groups' => 'read']);
+        return $this->normalizeResource($this->resource->retrieve()->toList());
     }
 }

@@ -13,8 +13,22 @@ use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class UpdateEmailOperation
- * @package Rmr\Ports\Operation\Client
+ * @OA\Patch(
+ *     path="/clients/{id}/email",
+ *     summary="Modifies email of given Client resource.",
+ *     tags={"Client"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Modified Client resource IRI.",
+ *         @OA\JsonContent(ref="#/components/schemas/ClientIri"),
+ *     )
+ * )
  */
 final class UpdateEmailOperation extends AbstractOperation
 {

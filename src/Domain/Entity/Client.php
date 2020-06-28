@@ -6,18 +6,46 @@
 
 namespace Rmr\Domain\Entity;
 
+// TODO: move OA to infrastructure (requests)
+
 /**
  * Class Client
  * @package Rmr\Domain\Entity
+ *
+ * @OA\Schema()
  */
 class Client
 {
+    /**
+     * @OA\Property(
+     *     type="integer",
+     *     example="1"
+     * )
+     */
     private int $id;
 
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="John"
+     * )
+     */
     private string $firstname;
 
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="Doe"
+     * )
+     */
     private string $lastname;
 
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="john@doe.com"
+     * )
+     */
     private string $email;
 
     /**

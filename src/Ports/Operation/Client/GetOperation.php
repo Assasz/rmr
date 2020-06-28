@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\Client;
 
@@ -11,8 +7,22 @@ use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class GetClientOperation
- * @package Rmr\Ports\Operation\Client
+ * @OA\Get(
+ *     path="/clients/{id}",
+ *     summary="Retrieves given Client resource.",
+ *     tags={"Client"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="The Client resource.",
+ *         @OA\JsonContent(ref="#/components/schemas/Client"),
+ *     )
+ * )
  */
 final class GetOperation extends AbstractOperation
 {
@@ -41,6 +51,6 @@ final class GetOperation extends AbstractOperation
      */
     public function __invoke(Request $request): array
     {
-        return $this->normalizeResource($this->resource->retrieve(), 'Client', ['groups' => 'read']);
+        return $this->normalizeResource($this->resource->retrieve());
     }
 }

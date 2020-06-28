@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\Client;
 
@@ -13,8 +9,25 @@ use Rmr\Application\Resource\Client\ClientResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class ReplaceOperation
- * @package Rmr\Ports\Operation\Client
+ * @OA\Put(
+ *     path="/clients/{id}",
+ *     summary="Replaces given Client resource with new one.",
+ *     tags={"Client"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(ref="#/components/schemas/Client"),
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Replaced Client resource IRI.",
+ *         @OA\JsonContent(ref="#/components/schemas/ClientIri"),
+ *     )
+ * )
  */
 final class ReplaceOperation extends AbstractOperation
 {

@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\Client;
 
@@ -12,8 +8,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class RemoveOperation
- * @package Rmr\Ports\Operation\Client
+ * @OA\Delete(
+ *     path="/clients/{id}",
+ *     summary="Removes given Client resource.",
+ *     tags={"Client"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response="204",
+ *         description="The Client resource is removed.",
+ *     )
+ * )
  */
 final class RemoveOperation extends AbstractOperation
 {

@@ -6,31 +6,45 @@ use {{ rootNamespace }}\Ports\Operation\AbstractOperation;
 use {{ resourceNamespace }};
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @OA\Get(
+ *     path="/{{ entityClassName|lower ~ 's' }}",
+ *     summary="Retrieves {{ entityClassName }} collection resource.",
+ *     tags={"{{ entityClassName }}"},
+ *     @OA\Response(
+ *         response="200",
+ *         description="The {{ entityClassName }} collection resource.",
+ *         @OA\JsonContent(type="array",
+ *             @OA\Items(ref="#/components/schemas/{{ entityClassName }}")
+ *         ),
+ *     )
+ * )
+ */
 final class GetOperation extends AbstractOperation
 {
     /** @var {{ resourceClassName }} */
     protected $resource;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getMethod(): string
     {
         return AbstractOperation::GET_METHOD;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-    * @param Request $request
-    * @return array
-    */
+     * @param Request $request
+     * @return array
+     */
     public function __invoke(Request $request): array
     {
         return $this->normalizeResource($this->resource->retrieve()->toList());

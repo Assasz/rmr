@@ -8,39 +8,50 @@ use Rmr\Application\Resource\Order\OrderCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Post(
+ *     path="/orders",
+ *     summary="Inserts new Order item into collection resource.",
+ *     tags={"Order"},
+ *     @OA\Response(
+ *         response="201",
+ *         description="Inserted Order resource IRI.",
+ *     )
+ * )
+ */
 final class InsertOperation extends AbstractOperation
 {
     /** @var OrderCollectionResource */
     protected $resource;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getMethod(): string
     {
         return AbstractOperation::POST_METHOD;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getResponseStatus(): int
     {
         return Response::HTTP_CREATED;
     }
 
     /**
-    * @param Request $request
-    * @return string
-    */
+     * @param Request $request
+     * @return string
+     */
     public function __invoke(Request $request): string
     {
         /** @var Order $order */

@@ -36,3 +36,9 @@ Generate basic API for existing resources:
 ```
 php bin/console app:generate-api
 ```
+
+Generate OpenAPI docs into YAML file:
+
+```
+./vendor/bin/openapi --o openapi/openapi.yaml src/
+```

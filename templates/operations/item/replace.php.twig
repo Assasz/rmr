@@ -10,22 +10,45 @@ use {{ outputNamespace }};
 use {{ resourceNamespace }};
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @OA\Put(
+ *     path="/{{ entityClassName|lower ~ 's' }}/{id}",
+ *     summary="Replaces given {{ entityClassName }} resource with new one.",
+ *     tags={"{{ entityClassName }}"},
+ *     @OA\Parameter(
+ *         name="id",
+ *         in="path",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(ref="#/components/schemas/{{ entityClassName }}"),
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Replaced {{ entityClassName }} resource IRI.",
+{% if outputClassName is not null %}
+ *         @OA\JsonContent(ref="#/components/schemas/{{ outputClassName }}"),
+{% endif %}
+ *     )
+ * )
+ */
 final class ReplaceOperation extends AbstractOperation
 {
     /** @var {{ resourceClassName }} */
     protected $resource;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getMethod(): string
     {
         return AbstractOperation::PUT_METHOD;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         return '/';
@@ -34,9 +57,9 @@ final class ReplaceOperation extends AbstractOperation
 {% set entityVar = '$' ~ entityClassName|lower %}
 {% set newEntityVar = '$new' ~ entityClassName %}
     /**
-    * @param Request $request
-    * @return {{ outputClassName is not null ? outputClassName : 'string' }}
-    */
+     * @param Request $request
+     * @return {{ outputClassName is not null ? outputClassName : 'string' }}
+     */
     public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'string' }}
     {
         {{ entityVar }} = $this->resource->retrieve();

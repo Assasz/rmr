@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\ClientCollection;
 
@@ -14,8 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class InsertOperation
- * @package Rmr\Ports\Operation\ClientCollection
+ * @OA\Post(
+ *     path="/clients",
+ *     summary="Inserts new Client item into collection resource.",
+ *     tags={"Client"},
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(ref="#/components/schemas/Client"),
+ *     ),
+ *     @OA\Response(
+ *         response="201",
+ *         description="Inserted Client resource IRI.",
+ *         @OA\JsonContent(ref="#/components/schemas/ClientIri"),
+ *     )
+ * )
  */
 final class InsertOperation extends AbstractOperation
 {
@@ -23,33 +30,33 @@ final class InsertOperation extends AbstractOperation
     protected $resource;
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getMethod(): string
     {
         return AbstractOperation::POST_METHOD;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getResponseStatus(): int
     {
         return Response::HTTP_CREATED;
     }
 
     /**
-    * @param Request $request
-    * @return ClientIri
-    */
+     * @param Request $request
+     * @return ClientIri
+     */
     public function __invoke(Request $request): ClientIri
     {
         /** @var Client $client */

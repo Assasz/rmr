@@ -12,9 +12,17 @@ use Rmr\Application\Resource\Client\ClientResource;
 /**
  * Class ClientIri
  * @package Rmr\Infrastructure\Dto
+ *
+ * @OA\Schema()
  */
 final class ClientIri
 {
+    /**
+     * @OA\Property(
+     *     type="string",
+     *     example="/clients/1"
+     * )
+     */
     public string $client;
 
     /**
