@@ -30,3 +30,9 @@ DATABASE_URL='mysql://user:secret@localhost/mydb'
 
 php bin/console app:load-fixtures
 ```
+
+Generate basic API for existing resources:
+
+```
+php bin/console app:generate-api
+```

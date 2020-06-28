@@ -14,42 +14,42 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class CreateOperation
- * @package Rmr\Ports\Operation\Client
+ * Class InsertOperation
+ * @package Rmr\Ports\Operation\ClientCollection
  */
-final class CreateOperation extends AbstractOperation
+final class InsertOperation extends AbstractOperation
 {
     /** @var ClientCollectionResource */
     protected $resource;
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function getMethod(): string
     {
         return AbstractOperation::POST_METHOD;
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function getResponseStatus(): int
     {
         return Response::HTTP_CREATED;
     }
 
     /**
-     * @param Request $request
-     * @return ClientIri
-     */
+    * @param Request $request
+    * @return ClientIri
+    */
     public function __invoke(Request $request): ClientIri
     {
         /** @var Client $client */

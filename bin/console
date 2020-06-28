@@ -1,20 +1,27 @@
 #!/usr/bin/env php
 <?php
 
+use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
 use Rmr\Infrastructure\Http\Kernel;
 use Rmr\Infrastructure\Utils\Debug;
-use Symfony\Component\Console\Application;
+use Rmr\Infrastructure\Utils\ResourceApiGenerator;
+use Rmr\Ports\Command\GenerateApiCommand;
 use Rmr\Ports\Command\LoadFixturesCommand;
-use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
+use Symfony\Component\Console\Application;
 
 require dirname(__DIR__) . '/config/bootstrap.php';
 
 Debug::cli();
 
+$container = (new Kernel())->boot()->getContainer();
+
 /** @var EntityManagerAdapter $managerAdapter */
-$managerAdapter = (new Kernel())->boot()->getContainer()->get('entity_manager.adapter');
+$managerAdapter = $container->get('entity_manager.adapter');
+
+/** @var ResourceApiGenerator $resourceApiGenerator */
+$resourceApiGenerator = $container->get('resource_api_generator');
 
 $application = new Application();
 $application->add(new LoadFixturesCommand($managerAdapter));
-
+$application->add(new GenerateApiCommand($resourceApiGenerator));
 $application->run();

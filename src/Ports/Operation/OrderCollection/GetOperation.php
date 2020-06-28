@@ -11,34 +11,34 @@ use Rmr\Application\Resource\Order\OrderCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class GetAllOperation
+ * Class GetOperation
  * @package Rmr\Ports\Operation\OrderCollection
  */
-final class GetAllOperation extends AbstractOperation
+final class GetOperation extends AbstractOperation
 {
     /** @var OrderCollectionResource */
     protected $resource;
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function getMethod(): string
     {
         return AbstractOperation::GET_METHOD;
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function getPath(): string
     {
         return '/';
     }
 
     /**
-     * @param Request $request
-     * @return array
-     */
+    * @param Request $request
+    * @return array
+    */
     public function __invoke(Request $request): array
     {
         return $this->normalizeResource($this->resource->retrieve()->toList(), 'Order', ['groups' => 'read']);

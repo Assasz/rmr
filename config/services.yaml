@@ -25,3 +25,7 @@ services:
   entity_manager.adapter:
     class: Rmr\Infrastructure\Adapter\EntityManagerAdapter
     public: true
+
+  resource_api_generator:
+    class: Rmr\Infrastructure\Utils\Resource\ResourceApiGenerator
+    public: true

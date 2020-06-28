@@ -1,0 +1,46 @@
+<?php
+
+namespace {{ rootNamespace }}\Ports\Operation\{{ entityClassName }};
+
+use {{ rootNamespace }}\Ports\Operation\AbstractOperation;
+use {{ resourceNamespace }};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+final class RemoveOperation extends AbstractOperation
+{
+    /** @var {{ resourceClassName }} */
+    protected $resource;
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getMethod(): string
+    {
+        return AbstractOperation::DELETE_METHOD;
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getPath(): string
+    {
+        return '/';
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getResponseStatus(): int
+    {
+        return Response::HTTP_NO_CONTENT;
+    }
+
+    /**
+    * @param Request $request
+    */
+    public function __invoke(Request $request)
+    {
+        $this->resource->remove();
+    }
+}

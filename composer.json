@@ -15,6 +15,7 @@
     "cakephp/collection": "^3.8",
     "doctrine/orm": "^2.6",
     "filp/whoops": "^2.1",
+    "haydenpierce/class-finder": "^0.4.2",
     "moneyphp/money": "^3.3",
     "symfony/config": "^5.0",
     "symfony/console": "^5.0",
@@ -25,7 +26,8 @@
     "symfony/property-info": "^5.0",
     "symfony/serializer": "^5.0",
     "symfony/validator": "^5.0",
-    "symfony/yaml": "^5.0"
+    "symfony/yaml": "^5.0",
+    "twig/twig": "^3.0"
   },
   "require-dev": {
     "nelmio/alice": "^3.6",

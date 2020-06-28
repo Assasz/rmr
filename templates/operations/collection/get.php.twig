@@ -1,0 +1,38 @@
+<?php
+
+namespace {{ rootNamespace }}\Ports\Operation\{{ entityClassName }}Collection;
+
+use {{ rootNamespace }}\Ports\Operation\AbstractOperation;
+use {{ resourceNamespace }};
+use Symfony\Component\HttpFoundation\Request;
+
+final class GetOperation extends AbstractOperation
+{
+    /** @var {{ resourceClassName }} */
+    protected $resource;
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getMethod(): string
+    {
+        return AbstractOperation::GET_METHOD;
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getPath(): string
+    {
+        return '/';
+    }
+
+    /**
+    * @param Request $request
+    * @return array
+    */
+    public function __invoke(Request $request): array
+    {
+        return $this->normalizeResource($this->resource->retrieve()->toList());
+    }
+}

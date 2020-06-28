@@ -1,0 +1,62 @@
+<?php
+
+namespace {{ rootNamespace }}\Ports\Operation\{{ entityClassName }}Collection;
+
+use {{ entityNamespace }};
+use {{ rootNamespace }}\Ports\Operation\AbstractOperation;
+{% if outputNamespace is not null %}
+use {{ outputNamespace }};
+{% endif %}
+use {{ resourceNamespace }};
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+final class InsertOperation extends AbstractOperation
+{
+    /** @var {{ resourceClassName }} */
+    protected $resource;
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getMethod(): string
+    {
+        return AbstractOperation::POST_METHOD;
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getPath(): string
+    {
+        return '/';
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getResponseStatus(): int
+    {
+        return Response::HTTP_CREATED;
+    }
+
+{% set entityVar = '$' ~ entityClassName|lower %}
+    /**
+    * @param Request $request
+    * @return {{ outputClassName is not null ? outputClassName : 'array' }}
+    */
+    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'array' }}
+    {
+        /** @var {{ entityClassName }} {{ entityVar }} */
+        {{ entityVar }} = $this->deserializeBody($request, {{ entityClassName }}::class);
+
+        $this->validate({{ entityVar }}, '{{ entityClassName }}');
+        $this->resource->insert({{ entityVar }});
+
+{% if outputClassName is not null %}
+        return new {{ outputClassName }}({{ entityVar }});
+{% else %}
+        return (array){{ entityVar }};
+{% endif %}
+    }
+}

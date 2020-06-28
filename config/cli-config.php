@@ -9,7 +9,6 @@ require __DIR__ . '/bootstrap.php';
 
 Debug::cli();
 
-// replace with mechanism to retrieve EntityManager in your app
 /** @var EntityManagerAdapter $managerAdapter */
 $managerAdapter = (new Kernel())->boot()->getContainer()->get('entity_manager.adapter');
 

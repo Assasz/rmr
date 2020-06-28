@@ -24,8 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 final class Kernel
 {
     private ?ContainerInterface $container;
-    private ?Router $router;
-    private ?FormatterFactory $formatterFactory;
     private string $env;
     private bool $booted = false;
 
@@ -39,8 +37,6 @@ final class Kernel
         $this->env = $env;
 
         $this->initializeContainer();
-        $this->router = new Router(new ResourceLoader($this->getContainer(), $this->getConfigLocator()));
-        $this->formatterFactory = new FormatterFactory($this->getConfigLocator());
         $this->booted = true;
 
         return $this;
@@ -51,7 +47,7 @@ final class Kernel
      */
     public function shutdown(): self
     {
-        $this->container = $this->router = $this->formatterFactory = null;
+        $this->container = null;
         $this->booted = false;
 
         return $this;
@@ -90,14 +86,17 @@ final class Kernel
             throw new \RuntimeException('Unable to handle request when kernel is not booted. Please, boot kernel first.');
         }
 
+        $router = new Router(new ResourceLoader($this->getContainer(), $this->getConfigLocator()));
+        $formatterFactory = new FormatterFactory($this->getConfigLocator());
+
         try {
-            $formatter = $this->formatterFactory->create(...$request->getAcceptableContentTypes());
+            $formatter = $formatterFactory->create(...$request->getAcceptableContentTypes());
         } catch (NotAcceptableHttpException $e) {
             return new Response($e->getMessage(), $e->getStatusCode());
         }
 
         try {
-            $operation = $this->router->findOperation($request);
+            $operation = $router->findOperation($request);
             $output = $operation($request);
         } catch (HttpException $e) {
             return $formatter->format(['error' => $e->getMessage()], $e->getStatusCode());

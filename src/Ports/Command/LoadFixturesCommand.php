@@ -50,6 +50,8 @@ final class LoadFixturesCommand extends Command
     {
         $fixtures = (new NativeLoader())->loadFile(dirname(__DIR__, 3) . '/config/fixtures.yaml');
 
+        // TODO: add fixtures persistence mechanism (?)
+
         foreach ($fixtures->getObjects() as $fixture) {
             $this->entityManager->persist($fixture);
         }

@@ -1,0 +1,57 @@
+<?php
+
+namespace {{ rootNamespace }}\Ports\Operation\{{ entityClassName }};
+
+use {{ entityNamespace }};
+use {{ rootNamespace }}\Ports\Operation\AbstractOperation;
+{% if outputNamespace is not null %}
+use {{ outputNamespace }};
+{% endif %}
+use {{ resourceNamespace }};
+use Symfony\Component\HttpFoundation\Request;
+
+final class ReplaceOperation extends AbstractOperation
+{
+    /** @var {{ resourceClassName }} */
+    protected $resource;
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getMethod(): string
+    {
+        return AbstractOperation::PUT_METHOD;
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getPath(): string
+    {
+        return '/';
+    }
+
+{% set entityVar = '$' ~ entityClassName|lower %}
+{% set newEntityVar = '$new' ~ entityClassName %}
+    /**
+    * @param Request $request
+    * @return {{ outputClassName is not null ? outputClassName : 'array' }}
+    */
+    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'array' }}
+    {
+        {{ entityVar }} = $this->resource->retrieve();
+
+        /** @var {{ entityClassName }} {{ newEntityVar }} */
+        {{ newEntityVar }} = $this->deserializeBody($request, {{ entityClassName }}::class);
+        {{ newEntityVar }}->setId({{ entityVar }}->getId());
+
+        $this->validate({{ newEntityVar }}, '{{ entityClassName }}');
+        $this->resource->replace({{ newEntityVar }});
+
+{% if outputClassName is not null %}
+        return new {{ outputClassName }}({{ newEntityVar }});
+{% else %}
+        return (array){{ newEntityVar }};
+{% endif %}
+    }
+}
