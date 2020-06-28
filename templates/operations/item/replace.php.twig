@@ -35,9 +35,9 @@ final class ReplaceOperation extends AbstractOperation
 {% set newEntityVar = '$new' ~ entityClassName %}
     /**
     * @param Request $request
-    * @return {{ outputClassName is not null ? outputClassName : 'array' }}
+    * @return {{ outputClassName is not null ? outputClassName : 'string' }}
     */
-    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'array' }}
+    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'string' }}
     {
         {{ entityVar }} = $this->resource->retrieve();
 
@@ -51,7 +51,7 @@ final class ReplaceOperation extends AbstractOperation
 {% if outputClassName is not null %}
         return new {{ outputClassName }}({{ newEntityVar }});
 {% else %}
-        return (array){{ newEntityVar }};
+        return $this->resource::PATH . {{ newEntityVar }}->getId();
 {% endif %}
     }
 }

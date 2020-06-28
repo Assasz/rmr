@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright (c) 2020.
- * @author Paweł Antosiak <contact@pawelantosiak.com>
- */
 
 namespace Rmr\Ports\Operation\OrderCollection;
 
@@ -12,10 +8,6 @@ use Rmr\Application\Resource\Order\OrderCollectionResource;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class InsertOperation
- * @package Rmr\Ports\Operation\OrderCollection
- */
 final class InsertOperation extends AbstractOperation
 {
     /** @var OrderCollectionResource */
@@ -47,9 +39,9 @@ final class InsertOperation extends AbstractOperation
 
     /**
     * @param Request $request
-    * @return array
+    * @return string
     */
-    public function __invoke(Request $request): array
+    public function __invoke(Request $request): string
     {
         /** @var Order $order */
         $order = $this->deserializeBody($request, Order::class);
@@ -57,6 +49,6 @@ final class InsertOperation extends AbstractOperation
         $this->validate($order, 'Order');
         $this->resource->insert($order);
 
-        return (array)$order;
+        return $this->resource->getPath() . $order->getId();
     }
 }

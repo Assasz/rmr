@@ -10,6 +10,8 @@ use Rmr\Application\Resource\CollectionResourceInterface;
 use Rmr\Application\Resource\ResourceInterface;
 use Rmr\Infrastructure\Adapter\TwigAdapter;
 
+// TODO: add openapi support (?)
+
 /**
  * Class ResourceApiGenerator
  * @package Rmr\Infrastructure\Utils\Resource

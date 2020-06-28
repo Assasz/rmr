@@ -35,7 +35,7 @@ final class GenerateApiCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Generates basic API for existent resources.');
+        $this->setDescription('Generates basic API for existing resources.');
     }
 
     /**

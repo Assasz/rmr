@@ -43,9 +43,9 @@ final class InsertOperation extends AbstractOperation
 {% set entityVar = '$' ~ entityClassName|lower %}
     /**
     * @param Request $request
-    * @return {{ outputClassName is not null ? outputClassName : 'array' }}
+    * @return {{ outputClassName is not null ? outputClassName : 'string' }}
     */
-    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'array' }}
+    public function __invoke(Request $request): {{ outputClassName is not null ? outputClassName : 'string' }}
     {
         /** @var {{ entityClassName }} {{ entityVar }} */
         {{ entityVar }} = $this->deserializeBody($request, {{ entityClassName }}::class);
@@ -56,7 +56,7 @@ final class InsertOperation extends AbstractOperation
 {% if outputClassName is not null %}
         return new {{ outputClassName }}({{ entityVar }});
 {% else %}
-        return (array){{ entityVar }};
+        return $this->resource->getPath() . {{ entityVar }}->getId();
 {% endif %}
     }
 }
