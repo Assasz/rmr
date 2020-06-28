@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Class AbstractOperation
  * @package Rmr\Ports\Operation
- *
- * @OA\Info(title="Skeleton API", version="0.1.0")
  */
 abstract class AbstractOperation implements ResourceOperationInterface
 {

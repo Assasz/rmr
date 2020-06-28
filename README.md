@@ -40,5 +40,5 @@ php bin/console app:generate-api
 Generate OpenAPI docs into YAML file:
 
 ```
-./vendor/bin/openapi --o openapi/openapi.yaml src/
+./vendor/bin/openapi --output openapi/openapi.yaml src/ public/
 ```

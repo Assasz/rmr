@@ -8,6 +8,13 @@ use Rmr\Infrastructure\Utils\Debug;
 
 Debug::web();
 
+/**
+ * @OA\Info(
+ *     title="Skeleton API",
+ *     version="0.1.0"
+ * )
+ */
+
 $kernel = (new Kernel())->boot($_ENV['APP_ENV'] ?? 'dev');
 $kernel->handleRequest(Request::createFromGlobals())->send();
 $kernel->shutdown();
