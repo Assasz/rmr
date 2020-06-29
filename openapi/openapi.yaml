@@ -3,36 +3,6 @@ info:
   title: 'Skeleton API'
   version: 0.1.0
 paths:
-  /clients:
-    get:
-      tags:
-        - Client
-      summary: 'Retrieves Client collection resource.'
-      responses:
-        '200':
-          description: 'The Client collection resource.'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Client'
-    post:
-      tags:
-        - Client
-      summary: 'Inserts new Client item into collection resource.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Client'
-      responses:
-        '201':
-          description: 'Inserted Client resource IRI.'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ClientIri'
   '/clients/{id}':
     get:
       tags:
@@ -101,6 +71,11 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEmail'
       responses:
         '200':
           description: 'Modified Client resource IRI.'
@@ -108,27 +83,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ClientIri'
-  /orders:
+  /clients:
     get:
       tags:
-        - Order
-      summary: 'Retrieves Order collection resource.'
+        - Client
+      summary: 'Retrieves Client collection resource.'
       responses:
         '200':
-          description: 'The Order collection resource.'
+          description: 'The Client collection resource.'
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Client'
     post:
       tags:
-        - Order
-      summary: 'Inserts new Order item into collection resource.'
+        - Client
+      summary: 'Inserts new Client item into collection resource.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
       responses:
         '201':
-          description: 'Inserted Order resource IRI.'
+          description: 'Inserted Client resource IRI.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientIri'
 components:
   schemas:
     Client:
@@ -152,4 +136,10 @@ components:
         client:
           type: string
           example: /clients/1
+      type: object
+    NewEmail:
+      properties:
+        email:
+          type: string
+          example: john@doe.com
       type: object

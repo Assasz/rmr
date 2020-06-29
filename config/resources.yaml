@@ -7,6 +7,3 @@ resources:
   Rmr\Application\Resource\Client\ClientCollectionResource:
     - Rmr\Ports\Operation\ClientCollection\GetOperation
     - Rmr\Ports\Operation\ClientCollection\InsertOperation
-  Rmr\Application\Resource\Order\OrderCollectionResource:
-    - Rmr\Ports\Operation\OrderCollection\GetOperation
-    - Rmr\Ports\Operation\OrderCollection\InsertOperation

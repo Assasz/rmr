@@ -1,4 +1,4 @@
-Rmr\Domain\Entity\Client:
+Rmr\Infrastructure\Dto\NewEmail:
   properties:
     email:
       - NotBlank: ~

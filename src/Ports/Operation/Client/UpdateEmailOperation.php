@@ -7,6 +7,7 @@
 namespace Rmr\Ports\Operation\Client;
 
 use Rmr\Domain\Entity\Client;
+use Rmr\Infrastructure\Dto\NewEmail;
 use Rmr\Ports\Operation\AbstractOperation;
 use Rmr\Infrastructure\Dto\ClientIri;
 use Rmr\Application\Resource\Client\ClientResource;
@@ -17,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  *     path="/clients/{id}/email",
  *     summary="Modifies email of given Client resource.",
  *     tags={"Client"},
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(ref="#/components/schemas/NewEmail"),
+ *     ),
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -57,11 +61,11 @@ final class UpdateEmailOperation extends AbstractOperation
      */
     public function __invoke(Request $request): ClientIri
     {
-        /** @var Client $body */
-        $body = $this->deserializeBody($request, Client::class, 'Client', ['groups' => 'updateEmail']);
+        /** @var NewEmail $newEmail */
+        $newEmail = $this->deserializeBody($request, NewEmail::class);
 
-        $this->validate($body, 'ClientEmail');
-        $this->resource->updateEmail($body->getEmail());
+        $this->validate($newEmail, 'ClientEmail');
+        $this->resource->updateEmail($newEmail->email);
 
         return new ClientIri($this->resource->retrieve());
     }
