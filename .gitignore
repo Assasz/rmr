@@ -2,5 +2,6 @@
 /var/
 /vendor/
 .env
+.env.test
 phpunit.xml
 .phpunit.result.cache
