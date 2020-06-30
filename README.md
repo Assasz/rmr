@@ -27,8 +27,12 @@ DATABASE_URL='mysql://user:secret@localhost/mydb'
 ```
 ./vendor/bin/doctrine orm:schema-tool:create
 ./vendor/bin/doctrine orm:schema-tool:update --force
+```
 
-php bin/console app:load-fixtures
+Load fixtures for specified environment (`dev` by default):
+
+```
+php bin/console app:load-fixtures --env=dev
 ```
 
 Generate basic API for existing resources:

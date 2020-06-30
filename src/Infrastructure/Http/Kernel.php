@@ -119,7 +119,7 @@ final class Kernel
         $this->container = new ContainerBuilder();
 
         $loader = new YamlFileLoader($this->container, $this->getConfigLocator());
-        $loader->load('services.yaml');
+        $loader->load(($this->env === 'test') ? 'services_test.yaml' : 'services.yaml');
 
         $this->container->compile();
     }

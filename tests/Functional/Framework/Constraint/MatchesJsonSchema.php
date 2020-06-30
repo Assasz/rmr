@@ -110,10 +110,9 @@ final class MatchesJsonSchema extends Constraint
     {
         $schemaReflection = new \ReflectionClass($schemaClassName);
 
-        $scan = \OpenApi\scan(
-            [$schemaReflection->getFileName()],
-            ['analysis' => new TestAnalysis()]
-        );
+        $scan = \OpenApi\scan($schemaReflection->getFileName(), [
+            'analysis' => new TestAnalysis()
+        ]);
 
         return json_decode($scan->components->schemas[0]->toJson());
     }

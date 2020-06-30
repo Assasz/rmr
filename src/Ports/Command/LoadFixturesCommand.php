@@ -9,6 +9,7 @@ namespace Rmr\Ports\Command;
 use Nelmio\Alice\Loader\NativeLoader;
 use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -35,30 +36,23 @@ final class LoadFixturesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Loads fixtures into database.');
+        $this
+            ->setDescription('Loads fixtures into database for specified environment (dev by default).')
+            ->addOption('env', null, InputArgument::OPTIONAL);
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Nelmio\Alice\Throwable\LoadingThrowable
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fixtures = (new NativeLoader())->loadFile(dirname(__DIR__, 3) . '/config/fixtures.yaml');
+        $env = $input->getOption('env') ?? 'dev';
+        $loadedFixtures = $this->entityManager->loadFixtures(["_{$env}.yaml"]);
 
-        // TODO: add fixtures persistence mechanism (?)
-
-        foreach ($fixtures->getObjects() as $fixture) {
-            $this->entityManager->persist($fixture);
-        }
-
-        $this->entityManager->flush();
-
-        $output->writeln('Fixtures loaded: ' . count($fixtures->getObjects()));
+        $output->writeln("Fixtures loaded: {$loadedFixtures}");
 
         return 0;
     }

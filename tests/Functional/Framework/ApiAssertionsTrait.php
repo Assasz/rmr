@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rmr\Tests\Functional\Framework;
 
-use Rmr\Tests\Functional\Constraint\MatchesJsonSchema;
+use Rmr\Tests\Functional\Framework\Constraint\MatchesJsonSchema;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 trait ApiAssertionsTrait
@@ -16,7 +16,11 @@ trait ApiAssertionsTrait
 
     public static function assertMatchesCollectionJsonSchema(ResponseInterface $response, string $schemaClassName, ?int $checkMode = null, string $message = ''): void
     {
-        self::matchesJsonSchema($response->toArray(false)[0], $schemaClassName, $checkMode, $message);
+        $data = (count($response->toArray(false)) === 0) ?
+            $response->toArray(false) :
+            $response->toArray(false)[0];
+
+        self::matchesJsonSchema($data, $schemaClassName, $checkMode, $message);
     }
 
     private static function matchesJsonSchema($data, string $schemaClassName, ?int $checkMode, string $message = ''): void

@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
+use Nelmio\Alice\Loader\NativeLoader;
 use Rmr\Application\Contract\Adapter\EntityManagerAdapterInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
 
@@ -70,6 +71,53 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
     public function flush(): void
     {
         $this->entityManager->flush();
+    }
+
+    public function beginTransaction(): void
+    {
+        $this->entityManager->getConnection()->beginTransaction();
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\ConnectionException
+     */
+    public function rollback(): void
+    {
+        if ($this->entityManager->getConnection()->isTransactionActive()) {
+            $this->entityManager->getConnection()->rollback();
+        }
+    }
+
+    /**
+     * @param array $files
+     * @return int
+     * @throws \Nelmio\Alice\Throwable\LoadingThrowable
+     */
+    public function loadFixtures(array $files): int
+    {
+        $files = array_map(
+            static function (string $fileName): string {
+                return dirname(__DIR__, 3) . '/config/fixtures/' . $fileName;
+            },
+            $files
+        );
+
+        $entityManager = $this->entityManager;
+        $fixtures = (new NativeLoader())->loadFiles($files)->getObjects();
+
+        $loadedFixtures = array_reduce(
+            $fixtures,
+            static function (int $loadedFixtures, object $fixture) use ($entityManager): int {
+                $entityManager->persist($fixture);
+
+                return $loadedFixtures + 1;
+            },
+            0
+        );
+
+        $this->entityManager->flush();
+
+        return $loadedFixtures;
     }
 
     /**

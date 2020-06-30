@@ -1,0 +1,9 @@
+Rmr\Domain\Entity\Client:
+  client (template):
+    firstname: <firstname()>
+    lastname: <lastname()>
+    email: <email()>
+  client_1 (extends client):
+    email: test@gmail.com
+  client_{2..5} (extends client):
+    ~

@@ -3,7 +3,7 @@ services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    public: false       # Allows optimizing the container by removing unused services; this also means
+    public: true        # Allows optimizing the container by removing unused services; this also means
                         # fetching services directly from the container via $container->get() won't work.
                         # The best practice is to be explicit about your dependencies anyway.
 
@@ -16,18 +16,5 @@ services:
       - '../src/Infrastructure/Http'
       - '../src/Infrastructure/Dto'
 
-  Rmr\Application\Resource\:
-    resource: '../src/Application/Resource'
-    public: true
-
-  Rmr\Ports\Operation\:
-    resource: '../src/Ports/Operation'
-    public: true
-
   entity_manager.adapter:
     class: Rmr\Infrastructure\Adapter\EntityManagerAdapter
-    public: true
-
-  resource_api_generator:
-    class: Rmr\Infrastructure\Utils\Resource\ResourceApiGenerator
-    public: true
