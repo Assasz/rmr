@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Rmr\Tests\Functional\Constraint;
+namespace Rmr\Tests\Functional\Framework\Constraint;
 
 use JsonSchema\Validator;
 use PHPUnit\Framework\Constraint\Constraint;
+use Rmr\Tests\Functional\Framework\TestAnalysis;
 
 /**
  * Class MatchesJsonSchema
@@ -23,10 +24,8 @@ final class MatchesJsonSchema extends Constraint
      */
     public function __construct(string $schemaClassName, ?int $checkMode = null)
     {
-        $schemaReflection = new \ReflectionClass($schemaClassName);
-
-        $this->schema = (object)['$ref' => "#/components/schemas/{$schemaReflection->getShortName()}"];
         $this->checkMode = $checkMode;
+        $this->schema = $this->generateSchema($schemaClassName);
     }
 
     /**
@@ -99,5 +98,20 @@ final class MatchesJsonSchema extends Constraint
         }
 
         return $document;
+    }
+
+    /**
+     * Generates JSON schema for given class name
+     */
+    private function generateSchema(string $schemaClassName): object
+    {
+        $schemaReflection = new \ReflectionClass($schemaClassName);
+
+        $scan = \OpenApi\scan(
+            [$schemaReflection->getFileName()],
+            ['analysis' => new TestAnalysis()]
+        );
+
+        return json_decode($scan->components->schemas[0]->toJson());
     }
 }

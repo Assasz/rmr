@@ -12,7 +12,7 @@ class GetTest extends ApiTestCase
 {
     public function testStructure(): void
     {
-        $response = $this->client->request('GET', '/clients');
+        $response = $this->client->request('GET', '/clients/1');
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertMatchesItemJsonSchema($response, Client::class);

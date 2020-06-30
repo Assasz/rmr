@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rmr\Tests\Functional;
+namespace Rmr\Tests\Functional\Framework;
 
 use Rmr\Tests\Functional\Constraint\MatchesJsonSchema;
 use Symfony\Contracts\HttpClient\ResponseInterface;
