@@ -15,6 +15,8 @@ Via Composer:
 
 ```
 composer create-project assasz/rmr=dev-master
+cd rmr
+cp .env.dist .env && cp .env.test.dist .env.test
 ```
 
 Set up the database:
@@ -28,6 +30,16 @@ DATABASE_URL='mysql://user:secret@localhost/mydb'
 ./vendor/bin/doctrine orm:schema-tool:create
 ./vendor/bin/doctrine orm:schema-tool:update --force
 ```
+
+Set up test environment:
+
+```
+# .env.test
+DATABASE_URL='mysql://user:secret@localhost/mydb_test'
+BASE_URI='http://localhost'
+```
+
+### Utilities
 
 Load fixtures for specified environment (`dev` by default):
 
