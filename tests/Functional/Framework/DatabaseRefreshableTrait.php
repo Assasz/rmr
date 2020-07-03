@@ -21,11 +21,6 @@ trait DatabaseRefreshableTrait
         $schemaTool->createSchema($metadata);
     }
 
-    protected function loadFixtures(array $files): int
-    {
-        return $this->entityManager->loadFixtures($files);
-    }
-
     protected function dropDatabaseSchema(): void
     {
         $schemaTool = $this->getSchemaTool();
