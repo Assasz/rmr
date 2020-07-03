@@ -8,20 +8,11 @@ use JsonSchema\Validator;
 use PHPUnit\Framework\Constraint\Constraint;
 use Rmr\Tests\Functional\Framework\TestAnalysis;
 
-/**
- * Class MatchesJsonSchema
- * @package Rmr\Tests\Functional\Constraint
- */
 final class MatchesJsonSchema extends Constraint
 {
     private object $schema;
     private ?int $checkMode;
 
-    /**
-     * MatchesJsonSchema constructor.
-     * @param string $schemaClassName
-     * @param int|null $checkMode
-     */
     public function __construct(string $schemaClassName, ?int $checkMode = null)
     {
         $this->checkMode = $checkMode;
@@ -33,7 +24,7 @@ final class MatchesJsonSchema extends Constraint
      */
     public function toString(): string
     {
-        return 'matches the provided JSON Schema';
+        return 'matches provided JSON Schema';
     }
 
     /**

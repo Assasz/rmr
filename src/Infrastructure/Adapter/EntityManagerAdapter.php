@@ -73,21 +73,6 @@ class EntityManagerAdapter implements EntityManagerAdapterInterface
         $this->entityManager->flush();
     }
 
-    public function beginTransaction(): void
-    {
-        $this->entityManager->getConnection()->beginTransaction();
-    }
-
-    /**
-     * @throws \Doctrine\DBAL\ConnectionException
-     */
-    public function rollback(): void
-    {
-        if ($this->entityManager->getConnection()->isTransactionActive()) {
-            $this->entityManager->getConnection()->rollback();
-        }
-    }
-
     /**
      * @param array $files
      * @return int

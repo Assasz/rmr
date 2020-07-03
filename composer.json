@@ -33,9 +33,8 @@
   "require-dev": {
     "justinrainbow/json-schema": "^5.2",
     "nelmio/alice": "^3.6",
-    "phpunit/phpunit": "8",
-    "roave/security-advisories": "dev-master",
-    "symfony/http-client": "^5.1"
+    "phpunit/phpunit": "^9",
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {

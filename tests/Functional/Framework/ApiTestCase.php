@@ -8,38 +8,31 @@ use PHPUnit\Framework\TestCase;
 use Rmr\Infrastructure\Adapter\EntityManagerAdapter;
 use Rmr\Infrastructure\Http\Kernel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 abstract class ApiTestCase extends TestCase
 {
     use ApiAssertionsTrait;
+    use DatabaseRefreshableTrait;
 
-    protected ?HttpClientInterface $client;
     protected ?ContainerInterface $container;
+    protected ?HttpClient $client;
     protected ?EntityManagerAdapter $entityManager;
-
-    private const REQUEST_HEADERS = [
-        'Accept' => 'application/json',
-    ];
 
     public function setUp(): void
     {
-        if (false === array_key_exists('BASE_URI', $_ENV)) {
-            throw new \RuntimeException('BASE_URI variable needs to be defined in your .env.test file.');
-        }
+        $kernel = (new Kernel())->boot('test');
 
-        $this->container = (new Kernel())->boot('test')->getContainer();
+        $this->container = $kernel->getContainer();
+        $this->client = new HttpClient($kernel);
         $this->entityManager = $this->container->get('entity_manager.adapter');
-        $this->client = HttpClient::createForBaseUri($_ENV['BASE_URI'], ['headers' => self::REQUEST_HEADERS]);
 
-        $this->entityManager->beginTransaction();
+        $this->recreateDatabaseSchema();
     }
 
     public function tearDown(): void
     {
-        $this->entityManager->rollback();
+        $this->dropDatabaseSchema();
 
-        $this->container = $this->entityManager = $this->client = null;
+        $this->container = $this->client = $this->entityManager = null;
     }
 }

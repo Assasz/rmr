@@ -16,7 +16,7 @@ class GetTest extends ApiTestCase
     {
         parent::setUp();
 
-        $this->entityManager->loadFixtures(['clients.yaml']);
+        $this->loadFixtures(['clients.yaml']);
     }
 
     public function testStructure(): void
