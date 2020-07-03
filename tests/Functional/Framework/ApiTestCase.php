@@ -20,7 +20,7 @@ abstract class ApiTestCase extends TestCase
 
     public function setUp(): void
     {
-        $kernel = (new Kernel())->boot('test');
+        $kernel = (new Kernel())->boot($_ENV['APP_ENV'] ?? 'test');
 
         $this->container = $kernel->getContainer();
         $this->client = new HttpClient($kernel);
