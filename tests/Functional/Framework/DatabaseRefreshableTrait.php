@@ -15,18 +15,14 @@ trait DatabaseRefreshableTrait
     {
         $this->dropDatabaseSchema();
 
-        $schemaTool = $this->getSchemaTool();
         $metadata = $this->entityManager->getManager()->getMetadataFactory()->getAllMetadata();
-
-        $schemaTool->createSchema($metadata);
+        $this->getSchemaTool()->createSchema($metadata);
     }
 
     protected function dropDatabaseSchema(): void
     {
-        $schemaTool = $this->getSchemaTool();
         $metadata = $this->entityManager->getManager()->getMetadataFactory()->getAllMetadata();
-
-        $schemaTool->dropSchema($metadata);
+        $this->getSchemaTool()->dropSchema($metadata);
     }
 
     private function getSchemaTool(): SchemaTool
